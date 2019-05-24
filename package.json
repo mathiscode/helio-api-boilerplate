@@ -9,7 +9,8 @@
     "server:prod": "node dist/index.js",
     "clean": "rimraf dist",
     "transpile": "babel src --out-dir dist",
-    "build": "cross-env NODE_ENV=production npm-run-all clean transpile server:prod"
+    "build": "cross-env NODE_ENV=production npm-run-all clean transpile server:prod",
+    "test": "standard"
   },
   "repository": {
     "type": "git",
@@ -21,6 +22,11 @@
     "url": "https://github.com/mathiscode/helio-api-boilerplate/issues"
   },
   "homepage": "https://github.com/mathiscode/helio-api-boilerplate#readme",
+  "standard": {
+    "ignore": [
+      "/dist"
+    ]
+  },
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
