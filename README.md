@@ -67,4 +67,4 @@ To use a mod:
 
 ## Build
 
-Just run `yarn run build` and your project will be built into `dist/`
+Just run `yarn build` and your project will be built into `dist/`
