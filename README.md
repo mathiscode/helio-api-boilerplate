@@ -48,7 +48,7 @@ You may either store your mods in the mods folder, or use a yarn/npm package.
 
 To use a mod:
 
-1. *Optional*: `npm install <package>` (eg. helio-mod-jokes)
+1. *Optional*: `yarn add <package>` (eg. helio-mod-jokes)
      - Or create your mod inside `src/mods`
 2. Modify src/index.js:
     - `import ModName from <package>` under the "Import mods" comment
