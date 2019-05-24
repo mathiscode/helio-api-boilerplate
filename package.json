@@ -1,0 +1,52 @@
+{
+  "name": "helio-api-boilerplate",
+  "version": "0.1.0",
+  "description": "Extensible backend boilerplate utilizing Express.js, Mongoose, JWT, and User registration/authentication",
+  "main": "index.js",
+  "scripts": {
+    "start": "npm run build",
+    "server": "cross-env NODE_ENVIRONMENT=development nodemon --exec babel-node src/index.js",
+    "server:prod": "node dist/index.js",
+    "clean": "rimraf dist",
+    "transpile": "babel src --out-dir dist",
+    "build": "cross-env NODE_ENV=production npm-run-all clean transpile server:prod"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mathiscode/helio-api-boilerplate.git"
+  },
+  "author": "J.R. Mathis",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/mathiscode/helio-api-boilerplate/issues"
+  },
+  "homepage": "https://github.com/mathiscode/helio-api-boilerplate#readme",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "body-parser": "^1.19.0",
+    "dotenv": "^7.0.0",
+    "express": "^4.16.4",
+    "express-graphql": "^0.8.0",
+    "express-jwt": "^5.3.1",
+    "graphql": "^14.2.1",
+    "helio-mod-jokes": "^1.0.0",
+    "jsonwebtoken": "^8.5.1",
+    "moment": "^2.24.0",
+    "mongoose": "^5.5.4",
+    "npm-run-all": "^4.1.5",
+    "passport": "^0.4.0",
+    "passport-local": "^1.0.0",
+    "permit": "^0.2.4",
+    "rimraf": "^2.6.3",
+    "uuid": "^3.3.2"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.4.4",
+    "@babel/core": "^7.4.4",
+    "@babel/node": "^7.2.2",
+    "@babel/preset-env": "^7.4.4",
+    "cross-env": "^5.2.0",
+    "nodemon": "^1.18.11",
+    "standard": "^12.0.1"
+  }
+}

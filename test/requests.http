@@ -1,0 +1,126 @@
+@baseUrl = http://localhost:3001
+@defaultEmail = test@test.com
+@defaultPassword = testtest1234
+
+
+GET {{baseUrl}}
+
+###
+
+POST {{baseUrl}}/register
+Content-Type: application/json
+
+{
+  "email": "{{defaultEmail}}",
+  "password": "{{defaultPassword}}"
+}
+
+###
+
+# @name auth
+@authToken = {{ auth.response.headers.X-AuthToken }}
+POST {{baseUrl}}/auth
+Content-Type: application/json
+
+{
+  "email": "{{defaultEmail}}",
+  "password": "{{defaultPassword}}"
+}
+
+###
+
+GET {{baseUrl}}/user
+Authorization: Bearer {{authToken}}
+
+###
+GET {{baseUrl}}/user/username
+Authorization: Bearer {{authToken}}
+
+###
+GET {{baseUrl}}/user/username/availability
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{ "username": "MyUsername2" }
+
+###
+
+PATCH {{baseUrl}}/user/username
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{ "username": "MyUsername2" }
+
+###
+
+GET {{baseUrl}}/user/profile
+Authorization: Bearer {{authToken}}
+
+###
+
+GET {{baseUrl}}/user/profile/name
+Authorization: Bearer {{authToken}}
+
+###
+
+POST {{baseUrl}}/user/profile/name
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+  "value": "John Doe"
+}
+
+###
+GET {{baseUrl}}/user/settings
+Authorization: Bearer {{authToken}}
+
+###
+
+GET {{baseUrl}}/user/setting/subscribeToNewsletter
+Authorization: Bearer {{authToken}}
+
+###
+
+POST {{baseUrl}}/user/setting/subscribeToNewsletter/
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+  "value": false
+}
+
+###
+
+POST {{baseUrl}}/user/update-password
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+  "currentPassword": "{{defaultPassword}}",
+  "newPassword": "testtest2",
+  "confirmPassword": "testtest2"
+}
+
+###
+
+GET {{baseUrl}}/user/client-settings
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+###
+
+POST {{baseUrl}}/user/client-settings
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+//{}
+{ "one": 2, "two": 3, "foo": "bar", "bar": "baz" }
+
+###
+
+GET {{baseUrl}}/jokes/?type=programming&amount=5
+
+###
+
+GET {{baseUrl}}/example/add/4/232
