@@ -1,4 +1,4 @@
-# ![Helio API Boilerplate](https://github.com/mathiscode/helio-api-boilerplate/blob/master/.github/logo.png) <!-- omit in toc -->
+# ![Helio API Boilerplate](.github/logo.png) <!-- omit in toc -->
 
 [![GitHub license](https://img.shields.io/github/license/mathiscode/helio-api-boilerplate.svg)](https://github.com/mathiscode/helio-api-boilerplate/blob/master/LICENSE.md)
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
