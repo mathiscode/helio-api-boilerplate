@@ -61,4 +61,3 @@ To use a mod:
 - `yarn add helio-mod-jokes`
 - `import Jokes from 'helio-mod-jokes'`
 - `{ path: '/jokes', module: Jokes }`
-W
