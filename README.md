@@ -50,7 +50,7 @@ To use a mod:
 
 1. *Optional*: `yarn add <package>` (eg. helio-mod-jokes)
      - Or create your mod inside `src/mods`
-2. Modify src/index.js:
+2. Modify [src/index.js](src/index.js):
     - `import ModName from <package>` under the "Import mods" comment
     - Add an object to the Mods array under the "Set mods to load" comment:
       - `{ path: '/my-mod', module: ModName }`
