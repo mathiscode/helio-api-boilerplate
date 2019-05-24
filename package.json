@@ -4,12 +4,12 @@
   "description": "Extensible backend boilerplate utilizing Express.js, Mongoose, JWT, and User registration/authentication",
   "main": "dist/index.js",
   "scripts": {
-    "start": "npm run build",
+    "start": "npm-run-all build server:prod",
     "server": "cross-env NODE_ENVIRONMENT=development nodemon --exec babel-node src/index.js",
     "server:prod": "node dist/index.js",
     "clean": "rimraf dist",
     "transpile": "babel src --out-dir dist",
-    "build": "cross-env NODE_ENV=production npm-run-all clean transpile server:prod",
+    "build": "cross-env NODE_ENV=production npm-run-all clean transpile",
     "test": "standard"
   },
   "repository": {

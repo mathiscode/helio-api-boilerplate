@@ -20,6 +20,7 @@
 - [Get Started](#get-started)
 - [Mods](#mods)
   - [Official Helio Mods](#official-helio-mods)
+- [Build](#build)
 
 ---
 
@@ -61,3 +62,7 @@ To use a mod:
 - `yarn add helio-mod-jokes`
 - `import Jokes from 'helio-mod-jokes'`
 - `{ path: '/jokes', module: Jokes }`
+
+## Build
+
+Just run `yarn run build` and your project will be built into `dist/`
