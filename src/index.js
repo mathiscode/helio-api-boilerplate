@@ -40,8 +40,13 @@ mongoose.set('useNewUrlParser', true)
 mongoose.set('useFindAndModify', false)
 mongoose.set('useCreateIndex', true)
 
-if (!process.env.DB_URI) {
-  console.error('You must define a mongodb DB_URI environment variable')
+let initError = false
+
+if (!process.env.DB_URI) initError = 'You must define a mongodb DB_URI environment variable'
+if (!process.env.JWT_SECRET) initError = 'You must define a JWT_SECRET environment variable'
+
+if (!process.env.JWT_SECRET) {
+  console.error(initError)
   process.exit(1)
 }
 

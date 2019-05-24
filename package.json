@@ -46,6 +46,12 @@
     "@babel/node": "^7.2.2",
     "@babel/preset-env": "^7.4.4",
     "cross-env": "^5.2.0",
+    "eslint": "^5.16.0",
+    "eslint-config-standard": "^12.0.0",
+    "eslint-plugin-import": "^2.17.2",
+    "eslint-plugin-node": "^9.1.0",
+    "eslint-plugin-promise": "^4.1.1",
+    "eslint-plugin-standard": "^4.0.0",
     "nodemon": "^1.18.11",
     "standard": "^12.0.1"
   }
