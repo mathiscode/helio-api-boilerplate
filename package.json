@@ -2,7 +2,7 @@
   "name": "helio-api-boilerplate",
   "version": "0.1.1",
   "description": "Extensible backend boilerplate utilizing Express.js, Mongoose, JWT, and User registration/authentication",
-  "main": "index.js",
+  "main": "dist/index.js",
   "scripts": {
     "start": "npm run build",
     "server": "cross-env NODE_ENVIRONMENT=development nodemon --exec babel-node src/index.js",
