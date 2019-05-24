@@ -8,9 +8,6 @@ import jwt from 'express-jwt'
 import ExampleMod from './mods/example-mod'
 import Jokes from 'helio-mod-jokes'
 
-// Import models
-// import User from './models/User'
-
 // Import core routes
 import UserRouter from './routes/user'
 
