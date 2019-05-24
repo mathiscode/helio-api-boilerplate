@@ -1,3 +1,5 @@
+<!-- markdownlint-disable MD009 -->
+
 # ![Helio API Boilerplate](.github/logo.png) <!-- omit in toc -->
 
 [![GitHub license](https://img.shields.io/github/license/mathiscode/helio-api-boilerplate.svg)](https://github.com/mathiscode/helio-api-boilerplate/blob/master/LICENSE.md)
