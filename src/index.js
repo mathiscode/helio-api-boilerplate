@@ -54,8 +54,16 @@ if (!process.env.JWT_SECRET) {
 // Setup logger
 const LogTransports = []
 require('winston-mongodb').MongoDB // eslint-disable-line
-if (process.env.CONSOLE_LOG !== 'false') LogTransports.push(new winston.transports.Console({ format: winston.format.simple() }))
-if (process.env.LOG_TO_DB) LogTransports.push(new MongoDB({ db: process.env.DB_URI }))
+
+LogTransports.push(new MongoDB({
+  db: process.env.DB_URI,
+  silent: process.env.NODE_ENV === 'testing' || process.env.LOG_TO_DB === 'false'
+}))
+
+LogTransports.push(new winston.transports.Console({
+  format: winston.format.simple(),
+  silent: process.env.NODE_ENV === 'testing' || process.env.CONSOLE_LOG === 'false'
+}))
 
 const Log = winston.createLogger({
   format: winston.format.json(),
