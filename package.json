@@ -10,7 +10,7 @@
     "clean": "rimraf dist",
     "transpile": "babel src --out-dir dist",
     "build": "cross-env NODE_ENV=production npm-run-all clean transpile",
-    "test": "standard && cross-env LOG_TO_DB=false CONSOLE_LOG=false CONSOLE_ERRORS=false PORT=0 mocha --require @babel/register --exit"
+    "test": "standard && cross-env LOG_TO_DB=false CONSOLE_LOG=false CONSOLE_ERRORS=false PORT=0 JWT_SECRET=supersecret mocha --require @babel/register --exit"
   },
   "repository": {
     "type": "git",
