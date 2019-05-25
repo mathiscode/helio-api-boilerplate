@@ -74,11 +74,13 @@ if (!process.env.JWT_SECRET) {
 var LogTransports = [];
 require('winston-mongodb').MongoDB; // eslint-disable-line
 
-if (process.env.CONSOLE_LOG !== 'false') LogTransports.push(new _winston["default"].transports.Console({
-  format: _winston["default"].format.simple()
+LogTransports.push(new _winstonMongodb.MongoDB({
+  db: process.env.DB_URI,
+  silent: process.env.NODE_ENV === 'testing' || process.env.LOG_TO_DB === 'false'
 }));
-if (process.env.LOG_TO_DB) LogTransports.push(new _winstonMongodb.MongoDB({
-  db: process.env.DB_URI
+LogTransports.push(new _winston["default"].transports.Console({
+  format: _winston["default"].format.simple(),
+  silent: process.env.NODE_ENV === 'testing' || process.env.CONSOLE_LOG === 'false'
 }));
 
 var Log = _winston["default"].createLogger({

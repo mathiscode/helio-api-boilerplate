@@ -74,12 +74,7 @@
   },
   "config": {
     "pre-git": {
-      "commit-msg": "simple",
-      "pre-commit": ["npm run build", "npm test"],
-      "pre-push": [],
-      "post-commit": [],
-      "post-checkout": [],
-      "post-merge": []
+      "pre-commit": ["npm run build", "npm test"]
     }
   }
 }
