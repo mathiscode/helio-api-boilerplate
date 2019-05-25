@@ -35,7 +35,7 @@ Helio is an easily extensible backend utilizing Express.js, Mongoose, JWT, and U
 ```sh
 git clone --depth=1 https://github.com/mathiscode/helio-api-boilerplate.git
 cd helio-api-boilerplate
-cp .env.example .env # use the example environment
+cp .env.example .env # use the example environment; modify as needed
 yarn # to install dependencies
 yarn run server # for development
 yarn start # for production
