@@ -8,10 +8,11 @@ import { MongoDB } from 'winston-mongodb'
 
 // Import mods
 import ExampleMod from './mods/example-mod'
+import UsersMod from 'helio-mod-users'
 import Jokes from 'helio-mod-jokes'
 
-// Import core routes
-import UserRouter from './routes/user'
+// Import models
+import UserModel from './models/User'
 
 import dotenv from 'dotenv'
 dotenv.config()
@@ -26,13 +27,13 @@ let PublicPaths = [
 // Set mods to load
 const Mods = [
   { path: '/example', module: ExampleMod },
+  { path: '/user', module: UsersMod },
   { path: '/jokes', module: Jokes }
 ]
 
-// Core routes
-const routes = [
-  { path: '/user', module: UserRouter }
-]
+// Set Core routes to load
+// You should be using a mod instead, but this is here in case you need it
+const routes = []
 
 const app = express()
 
@@ -103,10 +104,21 @@ const initializeServer = app.initializeServer = () => {
   app.use(jwt({ secret: process.env.JWT_SECRET, credentialsRequired: false })) // decode token even on public paths
   app.use(jwt({ secret: process.env.JWT_SECRET }).unless({ path: PublicPaths })) // protect private paths
 
+  // Setup models to be provided to mods
+  const ModModels = [
+    { name: 'User', model: UserModel }
+  ]
+
   // Setup mod routes
   Mods.forEach(options => {
     const Mod = options.module
     const instance = new Mod(options)
+
+    if (instance.receiveModels && instance.needModels) {
+      const giveModels = ModModels.filter(model => instance.needModels.includes(model.name))
+      instance.receiveModels(giveModels)
+    }
+
     app.use(options.path, instance.router)
   })
 

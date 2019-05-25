@@ -19,7 +19,7 @@ Content-Type: application/json
 
 # @name auth
 @authToken = {{ auth.response.headers.X-AuthToken }}
-POST {{baseUrl}}/user/auth
+POST {{baseUrl}}/user/login
 Content-Type: application/json
 
 {
@@ -77,12 +77,12 @@ Authorization: Bearer {{authToken}}
 
 ###
 
-GET {{baseUrl}}/user/setting/subscribeToNewsletter
+GET {{baseUrl}}/user/settings/subscribeToNewsletter
 Authorization: Bearer {{authToken}}
 
 ###
 
-POST {{baseUrl}}/user/setting/subscribeToNewsletter/
+POST {{baseUrl}}/user/settings/subscribeToNewsletter/
 Content-Type: application/json
 Authorization: Bearer {{authToken}}
 
@@ -92,7 +92,7 @@ Authorization: Bearer {{authToken}}
 
 ###
 
-POST {{baseUrl}}/user/update-password
+PATCH {{baseUrl}}/user/password
 Content-Type: application/json
 Authorization: Bearer {{authToken}}
 

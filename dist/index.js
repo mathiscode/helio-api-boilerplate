@@ -21,9 +21,11 @@ var _winstonMongodb = require("winston-mongodb");
 
 var _exampleMod = _interopRequireDefault(require("./mods/example-mod"));
 
+var _helioModUsers = _interopRequireDefault(require("helio-mod-users"));
+
 var _helioModJokes = _interopRequireDefault(require("helio-mod-jokes"));
 
-var _user = _interopRequireDefault(require("./routes/user"));
+var _User = _interopRequireDefault(require("./models/User"));
 
 var _dotenv = _interopRequireDefault(require("dotenv"));
 
@@ -45,14 +47,15 @@ var Mods = [{
   path: '/example',
   module: _exampleMod["default"]
 }, {
+  path: '/user',
+  module: _helioModUsers["default"]
+}, {
   path: '/jokes',
   module: _helioModJokes["default"]
-}]; // Core routes
+}]; // Set Core routes to load
+// You should be using a mod instead, but this is here in case you need it
 
-var routes = [{
-  path: '/user',
-  module: _user["default"]
-}];
+var routes = [];
 var app = (0, _express["default"])(); // Setup and connect to database; server will not run until connected
 
 _mongoose["default"].set('useNewUrlParser', true);
@@ -126,11 +129,24 @@ var initializeServer = app.initializeServer = function () {
   }).unless({
     path: PublicPaths
   })); // protect private paths
-  // Setup mod routes
+  // Setup models to be provided to mods
+
+  var ModModels = [{
+    name: 'User',
+    model: _User["default"]
+  }]; // Setup mod routes
 
   Mods.forEach(function (options) {
     var Mod = options.module;
     var instance = new Mod(options);
+
+    if (instance.receiveModels && instance.needModels) {
+      var giveModels = ModModels.filter(function (model) {
+        return instance.needModels.includes(model.name);
+      });
+      instance.receiveModels(giveModels);
+    }
+
     app.use(options.path, instance.router);
   }); // Root handler
 
