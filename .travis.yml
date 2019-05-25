@@ -7,5 +7,3 @@ before_install:
 env:
   global:
     - DB_URI="mongodb+srv://helio:Cs6Uqm8bDcNg6rzP@cluster0-6jx5i.mongodb.net/dev?retryWrites=true"
-    - CONSOLE_LOG=false
-    - CONSOLE_ERRORS=false
