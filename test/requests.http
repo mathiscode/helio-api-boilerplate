@@ -7,7 +7,7 @@ GET {{baseUrl}}
 
 ###
 
-POST {{baseUrl}}/register
+POST {{baseUrl}}/user/register
 Content-Type: application/json
 
 {
@@ -19,7 +19,7 @@ Content-Type: application/json
 
 # @name auth
 @authToken = {{ auth.response.headers.X-AuthToken }}
-POST {{baseUrl}}/auth
+POST {{baseUrl}}/user/auth
 Content-Type: application/json
 
 {
@@ -119,8 +119,12 @@ Authorization: Bearer {{authToken}}
 
 ###
 
-GET {{baseUrl}}/jokes/?type=programming&amount=5
+GET {{baseUrl}}/jokes?type=programming
 
 ###
 
 GET {{baseUrl}}/example/add/4/232
+
+###
+
+GET {{baseUrl}}/example/test-error

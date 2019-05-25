@@ -7,8 +7,8 @@ import User from '../models/User'
 
 const router = express.Router()
 
-const errorHandler = (err, res, code = 500) => {
-  console.error(err)
+const errorHandler = (err, req, res, code = 500) => {
+  req.Log.error(err)
   if (res) return res.status(code).json({ error: err.toString() })
 }
 
@@ -17,7 +17,7 @@ router.get('/', (req, res) => {
     .then(user => {
       res.json(user)
     })
-    .catch(err => errorHandler(err, res))
+    .catch(err => errorHandler(err, req, res))
 })
 
 router.post('/auth', (req, res) => {
@@ -51,7 +51,7 @@ router.post('/register', (req, res) => {
 
   bcrypt.hash(password, 10, (err, hash) => {
     if (err) {
-      console.error(err)
+      req.Log.error(err)
       return res.status(500).json({ error: 'Error hashing your password' })
     }
 
@@ -94,7 +94,7 @@ router.get('/client-settings', (req, res) => {
     .then(user => {
       res.json({ clientSettings: user.clientSettings })
     })
-    .catch(err => errorHandler(err, res))
+    .catch(err => errorHandler(err, req, res))
 })
 
 router.post('/client-settings', (req, res) => {
@@ -110,7 +110,7 @@ router.post('/client-settings', (req, res) => {
         res.json({ message: 'Client Settings updated' })
       })
     })
-    .catch(err => errorHandler(err, res))
+    .catch(err => errorHandler(err, req, res))
 })
 
 router.get('/settings', (req, res) => {
@@ -118,7 +118,7 @@ router.get('/settings', (req, res) => {
     .then(user => {
       res.json({ settings: user.settings })
     })
-    .catch(err => errorHandler(err, res))
+    .catch(err => errorHandler(err, req, res))
 })
 
 router.get('/setting/:key', (req, res) => {
@@ -126,7 +126,7 @@ router.get('/setting/:key', (req, res) => {
     .then(user => {
       res.json({ key: req.params.key, value: user.settings[req.params.key] || null })
     })
-    .catch(err => errorHandler(err, res))
+    .catch(err => errorHandler(err, req, res))
 })
 
 router.post('/setting/:key', (req, res) => {
@@ -138,7 +138,7 @@ router.post('/setting/:key', (req, res) => {
         res.json({ message: 'Setting updated' })
       })
     })
-    .catch(err => errorHandler(err, res))
+    .catch(err => errorHandler(err, req, res))
 })
 
 router.get('/profile', (req, res) => {
@@ -146,7 +146,7 @@ router.get('/profile', (req, res) => {
     .then(user => {
       res.json({ profile: user.profile })
     })
-    .catch(err => errorHandler(err, res))
+    .catch(err => errorHandler(err, req, res))
 })
 
 router.get('/profile/:key', (req, res) => {
@@ -154,7 +154,7 @@ router.get('/profile/:key', (req, res) => {
     .then(user => {
       res.json({ key: req.params.key, value: user.profile[req.params.key] || null })
     })
-    .catch(err => errorHandler(err, res))
+    .catch(err => errorHandler(err, req, res))
 })
 
 router.post('/profile/:key', (req, res) => {
@@ -162,11 +162,11 @@ router.post('/profile/:key', (req, res) => {
     .then(user => {
       user.profile[req.params.key] = req.body.value
       user.save(err => {
-        if (err) return errorHandler(err)
+        if (err) return errorHandler(err, req, res)
         res.json({ message: 'Profile updated' })
       })
     })
-    .catch(err => errorHandler(err, res))
+    .catch(err => errorHandler(err, req, res))
 })
 
 router.get('/username', (req, res) => {
@@ -174,7 +174,7 @@ router.get('/username', (req, res) => {
     .then(user => {
       res.json(user.username)
     })
-    .catch(err => errorHandler(err, res))
+    .catch(err => errorHandler(err, req, res))
 })
 
 router.get('/username/availability', (req, res) => {
@@ -183,7 +183,7 @@ router.get('/username/availability', (req, res) => {
       if (count !== 0) return res.status(406).json({ error: 'Username is unavailable' })
       return res.json({ message: 'Username is available' })
     })
-    .catch(err => errorHandler(err, res))
+    .catch(err => errorHandler(err, req, res))
 })
 
 router.patch('/username', (req, res) => {
@@ -194,7 +194,7 @@ router.patch('/username', (req, res) => {
         .then(user => {
           return res.json({ message: 'Username updated successfully' })
         })
-        .catch(err => errorHandler(err, res))
+        .catch(err => errorHandler(err, req, res))
     })
 })
 
@@ -207,7 +207,7 @@ router.post('/update-password', (req, res) => {
         if (newPassword === confirmPassword) {
           bcrypt.hash(newPassword, 10, (err, hash) => {
             if (err) {
-              console.error(err)
+              req.Log.error(err)
               return res.status(500).json({ error: 'Error hashing your password' })
             }
 

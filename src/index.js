@@ -3,6 +3,8 @@ import express from 'express'
 import bodyParser from 'body-parser'
 import mongoose from 'mongoose'
 import jwt from 'express-jwt'
+import winston from 'winston'
+import { MongoDB } from 'winston-mongodb'
 
 // Import mods
 import ExampleMod from './mods/example-mod'
@@ -32,6 +34,8 @@ const routes = [
   { path: '/user', module: UserRouter }
 ]
 
+const app = express()
+
 // Setup and connect to database; server will not run until connected
 mongoose.set('useNewUrlParser', true)
 mongoose.set('useFindAndModify', false)
@@ -47,21 +51,36 @@ if (!process.env.JWT_SECRET) {
   process.exit(1)
 }
 
-console.log('Connecting to database...')
+// Setup logger
+const LogTransports = []
+require('winston-mongodb').MongoDB // eslint-disable-line
+if (process.env.CONSOLE_LOG !== 'false') LogTransports.push(new winston.transports.Console({ format: winston.format.simple() }))
+if (process.env.LOG_TO_DB) LogTransports.push(new MongoDB({ db: process.env.DB_URI }))
+
+const Log = winston.createLogger({
+  format: winston.format.json(),
+  transports: LogTransports
+})
+
+Log.info('Connecting to database...')
 mongoose.connect(process.env.DB_URI, (err) => {
   if (err) {
-    console.error(err.toString())
+    Log.error(err.toString())
     process.exit(2)
   } else {
     initializeServer()
   }
 })
 
-const initializeServer = () => {
-  const app = express()
-
+const initializeServer = app.initializeServer = () => {
   app.disable('x-powered-by')
   app.use(bodyParser.json())
+
+  // Provide logger to routes
+  app.use((req, res, next) => {
+    req.Log = Log
+    next()
+  })
 
   // Setup mods public paths
   Mods.forEach(options => {
@@ -103,12 +122,14 @@ const initializeServer = () => {
 
   // Catch other errors
   app.use((err, req, res, next) => {
-    if (process.env.CONSOLE_ERRORS) console.error('APP ERROR:', err.stack)
+    if (process.env.CONSOLE_ERRORS === 'true') Log.error('APP ERROR:', err.stack)
     if (err.name === 'UnauthorizedError') return res.status(401).json({ error: 'Invalid token' })
     return res.status(500).json({ error: 'Internal API error' })
   })
 
   // Start listening for requests
   app.listen(process.env.PORT || 3001)
-  console.log(`${process.env.NAME || 'Helio API Server'} listening`)
+  Log.info(`${process.env.NAME || 'Helio API Server'} listening`)
 }
+
+export default app

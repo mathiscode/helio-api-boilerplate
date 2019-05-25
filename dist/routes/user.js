@@ -19,9 +19,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "d
 
 var router = _express["default"].Router();
 
-var errorHandler = function errorHandler(err, res) {
-  var code = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : 500;
-  console.error(err);
+var errorHandler = function errorHandler(err, req, res) {
+  var code = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 500;
+  req.Log.error(err);
   if (res) return res.status(code).json({
     error: err.toString()
   });
@@ -33,7 +33,7 @@ router.get('/', function (req, res) {
   }).select('-__v -_id -password').then(function (user) {
     res.json(user);
   })["catch"](function (err) {
-    return errorHandler(err, res);
+    return errorHandler(err, req, res);
   });
 });
 router.post('/auth', function (req, res) {
@@ -74,7 +74,7 @@ router.post('/register', function (req, res) {
 
   _bcryptjs["default"].hash(password, 10, function (err, hash) {
     if (err) {
-      console.error(err);
+      req.Log.error(err);
       return res.status(500).json({
         error: 'Error hashing your password'
       });
@@ -125,7 +125,7 @@ router.get('/client-settings', function (req, res) {
       clientSettings: user.clientSettings
     });
   })["catch"](function (err) {
-    return errorHandler(err, res);
+    return errorHandler(err, req, res);
   });
 });
 router.post('/client-settings', function (req, res) {
@@ -147,7 +147,7 @@ router.post('/client-settings', function (req, res) {
       });
     });
   })["catch"](function (err) {
-    return errorHandler(err, res);
+    return errorHandler(err, req, res);
   });
 });
 router.get('/settings', function (req, res) {
@@ -158,7 +158,7 @@ router.get('/settings', function (req, res) {
       settings: user.settings
     });
   })["catch"](function (err) {
-    return errorHandler(err, res);
+    return errorHandler(err, req, res);
   });
 });
 router.get('/setting/:key', function (req, res) {
@@ -170,7 +170,7 @@ router.get('/setting/:key', function (req, res) {
       value: user.settings[req.params.key] || null
     });
   })["catch"](function (err) {
-    return errorHandler(err, res);
+    return errorHandler(err, req, res);
   });
 });
 router.post('/setting/:key', function (req, res) {
@@ -185,7 +185,7 @@ router.post('/setting/:key', function (req, res) {
       });
     });
   })["catch"](function (err) {
-    return errorHandler(err, res);
+    return errorHandler(err, req, res);
   });
 });
 router.get('/profile', function (req, res) {
@@ -196,7 +196,7 @@ router.get('/profile', function (req, res) {
       profile: user.profile
     });
   })["catch"](function (err) {
-    return errorHandler(err, res);
+    return errorHandler(err, req, res);
   });
 });
 router.get('/profile/:key', function (req, res) {
@@ -208,7 +208,7 @@ router.get('/profile/:key', function (req, res) {
       value: user.profile[req.params.key] || null
     });
   })["catch"](function (err) {
-    return errorHandler(err, res);
+    return errorHandler(err, req, res);
   });
 });
 router.post('/profile/:key', function (req, res) {
@@ -217,13 +217,13 @@ router.post('/profile/:key', function (req, res) {
   }).then(function (user) {
     user.profile[req.params.key] = req.body.value;
     user.save(function (err) {
-      if (err) return errorHandler(err);
+      if (err) return errorHandler(err, req, res);
       res.json({
         message: 'Profile updated'
       });
     });
   })["catch"](function (err) {
-    return errorHandler(err, res);
+    return errorHandler(err, req, res);
   });
 });
 router.get('/username', function (req, res) {
@@ -232,7 +232,7 @@ router.get('/username', function (req, res) {
   }).select('username').then(function (user) {
     res.json(user.username);
   })["catch"](function (err) {
-    return errorHandler(err, res);
+    return errorHandler(err, req, res);
   });
 });
 router.get('/username/availability', function (req, res) {
@@ -246,7 +246,7 @@ router.get('/username/availability', function (req, res) {
       message: 'Username is available'
     });
   })["catch"](function (err) {
-    return errorHandler(err, res);
+    return errorHandler(err, req, res);
   });
 });
 router.patch('/username', function (req, res) {
@@ -266,7 +266,7 @@ router.patch('/username', function (req, res) {
         message: 'Username updated successfully'
       });
     })["catch"](function (err) {
-      return errorHandler(err, res);
+      return errorHandler(err, req, res);
     });
   });
 });
@@ -283,7 +283,7 @@ router.post('/update-password', function (req, res) {
       if (newPassword === confirmPassword) {
         _bcryptjs["default"].hash(newPassword, 10, function (err, hash) {
           if (err) {
-            console.error(err);
+            req.Log.error(err);
             return res.status(500).json({
               error: 'Error hashing your password'
             });

@@ -10,7 +10,7 @@
     "clean": "rimraf dist",
     "transpile": "babel src --out-dir dist",
     "build": "cross-env NODE_ENV=production npm-run-all clean transpile",
-    "test": "standard"
+    "test": "standard && cross-env LOG_TO_DB=false CONSOLE_LOG=false CONSOLE_ERRORS=false PORT=0 mocha --require @babel/register --exit"
   },
   "repository": {
     "type": "git",
@@ -44,13 +44,18 @@
     "passport-local": "^1.0.0",
     "permit": "^0.2.4",
     "rimraf": "^2.6.3",
-    "uuid": "^3.3.2"
+    "uuid": "^3.3.2",
+    "winston": "^3.2.1",
+    "winston-mongodb": "^5.0.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.4.4",
     "@babel/core": "^7.4.4",
     "@babel/node": "^7.2.2",
     "@babel/preset-env": "^7.4.4",
+    "@babel/register": "^7.4.4",
+    "chai": "^4.2.0",
+    "chai-http": "^4.3.0",
     "cross-env": "^5.2.0",
     "eslint": "^5.16.0",
     "eslint-config-standard": "^12.0.0",
@@ -58,6 +63,7 @@
     "eslint-plugin-node": "^9.1.0",
     "eslint-plugin-promise": "^4.1.1",
     "eslint-plugin-standard": "^4.0.0",
+    "mocha": "^6.1.4",
     "nodemon": "^1.18.11",
     "standard": "^12.0.1"
   }

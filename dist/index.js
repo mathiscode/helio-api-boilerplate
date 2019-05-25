@@ -1,5 +1,10 @@
 "use strict";
 
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports["default"] = void 0;
+
 var _package = _interopRequireDefault(require("../package.json"));
 
 var _express = _interopRequireDefault(require("express"));
@@ -9,6 +14,10 @@ var _bodyParser = _interopRequireDefault(require("body-parser"));
 var _mongoose = _interopRequireDefault(require("mongoose"));
 
 var _expressJwt = _interopRequireDefault(require("express-jwt"));
+
+var _winston = _interopRequireDefault(require("winston"));
+
+var _winstonMongodb = require("winston-mongodb");
 
 var _exampleMod = _interopRequireDefault(require("./mods/example-mod"));
 
@@ -43,7 +52,8 @@ var Mods = [{
 var routes = [{
   path: '/user',
   module: _user["default"]
-}]; // Setup and connect to database; server will not run until connected
+}];
+var app = (0, _express["default"])(); // Setup and connect to database; server will not run until connected
 
 _mongoose["default"].set('useNewUrlParser', true);
 
@@ -58,23 +68,43 @@ if (!process.env.JWT_SECRET) initError = 'You must define a JWT_SECRET environme
 if (!process.env.JWT_SECRET) {
   console.error(initError);
   process.exit(1);
-}
+} // Setup logger
 
-console.log('Connecting to database...');
+
+var LogTransports = [];
+require('winston-mongodb').MongoDB; // eslint-disable-line
+
+if (process.env.CONSOLE_LOG !== 'false') LogTransports.push(new _winston["default"].transports.Console({
+  format: _winston["default"].format.simple()
+}));
+if (process.env.LOG_TO_DB) LogTransports.push(new _winstonMongodb.MongoDB({
+  db: process.env.DB_URI
+}));
+
+var Log = _winston["default"].createLogger({
+  format: _winston["default"].format.json(),
+  transports: LogTransports
+});
+
+Log.info('Connecting to database...');
 
 _mongoose["default"].connect(process.env.DB_URI, function (err) {
   if (err) {
-    console.error(err.toString());
+    Log.error(err.toString());
     process.exit(2);
   } else {
     initializeServer();
   }
 });
 
-var initializeServer = function initializeServer() {
-  var app = (0, _express["default"])();
+var initializeServer = app.initializeServer = function () {
   app.disable('x-powered-by');
-  app.use(_bodyParser["default"].json()); // Setup mods public paths
+  app.use(_bodyParser["default"].json()); // Provide logger to routes
+
+  app.use(function (req, res, next) {
+    req.Log = Log;
+    next();
+  }); // Setup mods public paths
 
   Mods.forEach(function (options) {
     var Mod = options.module;
@@ -120,7 +150,7 @@ var initializeServer = function initializeServer() {
   }); // Catch other errors
 
   app.use(function (err, req, res, next) {
-    if (process.env.CONSOLE_ERRORS) console.error('APP ERROR:', err.stack);
+    if (process.env.CONSOLE_ERRORS === 'true') Log.error('APP ERROR:', err.stack);
     if (err.name === 'UnauthorizedError') return res.status(401).json({
       error: 'Invalid token'
     });
@@ -130,5 +160,8 @@ var initializeServer = function initializeServer() {
   }); // Start listening for requests
 
   app.listen(process.env.PORT || 3001);
-  console.log("".concat(process.env.NAME || 'Helio API Server', " listening"));
+  Log.info("".concat(process.env.NAME || 'Helio API Server', " listening"));
 };
+
+var _default = app;
+exports["default"] = _default;
