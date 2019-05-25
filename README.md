@@ -36,9 +36,9 @@ Helio is an easily extensible backend utilizing Express.js, Mongoose, JWT, and U
 git clone --depth=1 https://github.com/mathiscode/helio-api-boilerplate.git
 cd helio-api-boilerplate
 cp .env.example .env # use the example environment; modify as needed
-yarn # to install dependencies
-yarn run server # for development
-yarn start # for production
+yarn # to install dependencies; or npm install
+yarn server # for development; or npm run server
+yarn start # for production; or npm start
 ```
 
 ## Mods
@@ -51,7 +51,7 @@ You may either store your mods in the mods folder, or use a yarn/npm package.
 
 To use a mod:
 
-1. *Optional*: `yarn add <package>` (eg. helio-mod-jokes)
+1. *Optional*: `yarn add <package>` or `npm install <package>` (eg. helio-mod-jokes)
      - Or create your mod inside `src/mods`
 2. Modify [src/index.js](src/index.js):
     - `import ModName from <package>` under the "Import mods" comment
@@ -62,10 +62,10 @@ To use a mod:
 
 [Helio Jokes](https://github.com/mathiscode/helio-mod-jokes) - [npm](https://www.npmjs.com/package/helio-mod-jokes)
 
-- `yarn add helio-mod-jokes`
+- `yarn add helio-mod-jokes` or `npm install helio-mod-jokes`
 - `import Jokes from 'helio-mod-jokes'`
 - `{ path: '/jokes', module: Jokes }`
 
 ## Build
 
-Just run `yarn build` and your project will be built into `dist/`
+Just run `yarn build` or `npm run build` and your project will be built into `dist/`
