@@ -53,7 +53,6 @@ if (!process.env.JWT_SECRET) {
 
 // Setup logger
 const LogTransports = []
-require('winston-mongodb').MongoDB // eslint-disable-line
 
 LogTransports.push(new MongoDB({
   db: process.env.DB_URI,
