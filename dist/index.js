@@ -77,8 +77,6 @@ if (!process.env.JWT_SECRET) {
 
 
 var LogTransports = [];
-require('winston-mongodb').MongoDB; // eslint-disable-line
-
 LogTransports.push(new _winstonMongodb.MongoDB({
   db: process.env.DB_URI,
   silent: process.env.NODE_ENV === 'testing' || process.env.LOG_TO_DB === 'false'
@@ -158,6 +156,7 @@ var initializeServer = app.initializeServer = function () {
     }
 
     app.use(options.path, instance.router);
+    Log.info("[MOD REGISTERED] ".concat(instance.name));
   }); // Root handler
 
   app.get('/', function (req, res) {

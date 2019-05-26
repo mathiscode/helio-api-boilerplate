@@ -72,7 +72,8 @@
     "pre-git": {
       "pre-commit": [
         "npm run build",
-        "npm test"
+        "npm test",
+        "git add ."
       ]
     }
   }
