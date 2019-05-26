@@ -1,6 +1,6 @@
 @baseUrl = http://localhost:3001
 @defaultEmail = test@test.com
-@defaultPassword = testtest1234
+@defaultPassword = testtest2
 
 
 GET {{baseUrl}}
@@ -119,7 +119,7 @@ Authorization: Bearer {{authToken}}
 
 ###
 
-GET {{baseUrl}}/jokes?type=programming
+GET {{baseUrl}}/jokes?type=programming&amount=5
 
 ###
 

@@ -4,6 +4,7 @@ import bodyParser from 'body-parser'
 import mongoose from 'mongoose'
 import jwt from 'express-jwt'
 import winston from 'winston'
+import rateLimit from 'express-rate-limit'
 import { MongoDB } from 'winston-mongodb'
 
 // Import mods
@@ -19,8 +20,6 @@ dotenv.config()
 
 let PublicPaths = [
   '/',
-  '/user/auth',
-  '/user/register',
   ...(process.env.PUBLIC_PATHS ? process.env.PUBLIC_PATHS.split(',') : [])
 ]
 
@@ -84,6 +83,16 @@ mongoose.connect(process.env.DB_URI, (err) => {
 const initializeServer = app.initializeServer = () => {
   app.disable('x-powered-by')
   app.use(bodyParser.json())
+  // Uncomment the next line if you're behind a reverse proxy (Heroku, Bluemix, AWS ELB, Nginx, etc)
+  // app.set('trust proxy', 1)
+
+  // Setup rate limiting
+  const limiter = rateLimit({
+    windowMs: process.env.RATE_LIMIT_WINDOW || 15 * 60 * 1000,
+    max: process.env.RATE_LIMIT_MAX_REQUESTS_PER_WINDOW || 100
+  })
+
+  app.use(limiter)
 
   // Provide logger to routes
   app.use((req, res, next) => {
