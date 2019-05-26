@@ -12,6 +12,9 @@ export default class {
     // Comment the next line out if you don't want any public paths, or modify as needed
     this.publicPaths = [options.path, new RegExp(`^${options.path}/.*`)]
 
+    // Specify which models you need in this mod
+    this.needModels = ['User']
+
     // Setup your routes here; bind(this) if you need access to the mod itself
     router.get('/', this.index.bind(this))
     router.get('/add/:x/:y', this.add)
@@ -20,8 +23,18 @@ export default class {
     // This is the mod's error handler
     const self = this
     router.use((err, req, res, next) => {
-      console.error(`[MOD ERROR] (${self.name})`, err.stack)
+      req.Log.error(`[MOD ERROR] (${self.name}) ${err.stack}`)
       return res.status(500).json({ error: err.toString() })
+    })
+  }
+
+  // This function receives models requested with this.needModels
+  // Access them in route methods with this.models.ModelName
+  receiveModels (models) {
+    this.models = {}
+
+    models.forEach(model => {
+      this.models[model.name] = model.model
     })
   }
 
