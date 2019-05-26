@@ -1,6 +1,9 @@
 <!-- markdownlint-disable MD009 -->
 
 # ![Helio API Boilerplate](.github/logo.png) <!-- omit in toc -->
+Helio is an easily extensible backend utilizing Express.js, Mongoose, JWT, and User registration/authentication. It tries not to be too opinionated, but does conform to the [StandardJS](https://standardjs.com/) code style.
+
+---
 
 [![GitHub license](https://img.shields.io/github/license/mathiscode/helio-api-boilerplate.svg)](https://github.com/mathiscode/helio-api-boilerplate/blob/master/LICENSE)
 [![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
@@ -18,17 +21,12 @@
 
 ---
 
-- [What is Helio API Boilerplate](#what-is-helio-api-boilerplate)
 - [Get Started](#get-started)
 - [Mods](#mods)
   - [Official Helio Mods](#official-helio-mods)
 - [Build](#build)
 
 ---
-
-## What is Helio API Boilerplate
-
-Helio is an easily extensible backend utilizing Express.js, Mongoose, JWT, and User registration/authentication. It tries not to be too opinionated, but does conform to the [StandardJS](https://standardjs.com/) code style.
 
 ## Get Started
 
