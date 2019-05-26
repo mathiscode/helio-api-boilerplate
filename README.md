@@ -1,6 +1,7 @@
-<!-- markdownlint-disable MD009 -->
+<!-- markdownlint-disable MD006 MD009 -->
 
 # ![Helio API Boilerplate](.github/logo.png) <!-- omit in toc -->
+
 Helio is an easily extensible backend utilizing Express.js, Mongoose, JWT, and User registration/authentication. It tries not to be too opinionated, but does conform to the [StandardJS](https://standardjs.com/) code style.
 
 ---

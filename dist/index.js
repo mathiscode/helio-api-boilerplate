@@ -17,6 +17,8 @@ var _expressJwt = _interopRequireDefault(require("express-jwt"));
 
 var _winston = _interopRequireDefault(require("winston"));
 
+var _expressRateLimit = _interopRequireDefault(require("express-rate-limit"));
+
 var _winstonMongodb = require("winston-mongodb");
 
 var _exampleMod = _interopRequireDefault(require("./mods/example-mod"));
@@ -41,7 +43,7 @@ function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
 _dotenv["default"].config();
 
-var PublicPaths = ['/', '/user/auth', '/user/register'].concat(_toConsumableArray(process.env.PUBLIC_PATHS ? process.env.PUBLIC_PATHS.split(',') : [])); // Set mods to load
+var PublicPaths = ['/'].concat(_toConsumableArray(process.env.PUBLIC_PATHS ? process.env.PUBLIC_PATHS.split(',') : [])); // Set mods to load
 
 var Mods = [{
   path: '/example',
@@ -104,7 +106,15 @@ _mongoose["default"].connect(process.env.DB_URI, function (err) {
 
 var initializeServer = app.initializeServer = function () {
   app.disable('x-powered-by');
-  app.use(_bodyParser["default"].json()); // Provide logger to routes
+  app.use(_bodyParser["default"].json()); // Uncomment the next line if you're behind a reverse proxy (Heroku, Bluemix, AWS ELB, Nginx, etc)
+  // app.set('trust proxy', 1)
+  // Setup rate limiting
+
+  var limiter = (0, _expressRateLimit["default"])({
+    windowMs: process.env.RATE_LIMIT_WINDOW || 15 * 60 * 1000,
+    max: process.env.RATE_LIMIT_MAX_REQUESTS_PER_WINDOW || 100
+  });
+  app.use(limiter); // Provide logger to routes
 
   app.use(function (req, res, next) {
     req.Log = Log;
