@@ -26,7 +26,9 @@ function () {
     var router = this.router = _express["default"].Router(); // Comment the next line out if you don't want any public paths, or modify as needed
 
 
-    this.publicPaths = [options.path, new RegExp("^".concat(options.path, "/.*"))]; // Setup your routes here; bind(this) if you need access to the mod itself
+    this.publicPaths = [options.path, new RegExp("^".concat(options.path, "/.*"))]; // Specify which models you need in this mod
+
+    this.needModels = ['User']; // Setup your routes here; bind(this) if you need access to the mod itself
 
     router.get('/', this.index.bind(this));
     router.get('/add/:x/:y', this.add);
@@ -34,15 +36,27 @@ function () {
 
     var self = this;
     router.use(function (err, req, res, next) {
-      console.error("[MOD ERROR] (".concat(self.name, ")"), err.stack);
+      req.Log.error("[MOD ERROR] (".concat(self.name, ") ").concat(err.stack));
       return res.status(500).json({
         error: err.toString()
       });
     });
-  } // Now implement your route methods:
+  } // This function receives models requested with this.needModels
+  // Access them in route methods with this.models.ModelName
 
 
   _createClass(_default, [{
+    key: "receiveModels",
+    value: function receiveModels(models) {
+      var _this = this;
+
+      this.models = {};
+      models.forEach(function (model) {
+        _this.models[model.name] = model.model;
+      });
+    } // Now implement your route methods:
+
+  }, {
     key: "index",
     value: function index(req, res, next) {
       var user = req.user;

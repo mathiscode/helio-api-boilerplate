@@ -9,7 +9,7 @@ import { MongoDB } from 'winston-mongodb'
 // Import mods
 import ExampleMod from './mods/example-mod'
 import UsersMod from 'helio-mod-users'
-import Jokes from 'helio-mod-jokes'
+import JokesMod from 'helio-mod-jokes'
 
 // Import models
 import UserModel from './models/User'
@@ -28,7 +28,7 @@ let PublicPaths = [
 const Mods = [
   { path: '/example', module: ExampleMod },
   { path: '/user', module: UsersMod },
-  { path: '/jokes', module: Jokes }
+  { path: '/jokes', module: JokesMod }
 ]
 
 // Set Core routes to load

@@ -60,11 +60,17 @@ To use a mod:
 
 ### Official Helio Mods
 
+[Helio Users](https://github.com/mathiscode/helio-mod-users) - [npm](https://www.npmjs.com/package/helio-mod-users)
+
+- `yarn add helio-mod-users` or `npm install helio-mod-users`
+- `import UsersMod from 'helio-mod-users'`
+- `{ path: '/user', module: UsersMod }`
+
 [Helio Jokes](https://github.com/mathiscode/helio-mod-jokes) - [npm](https://www.npmjs.com/package/helio-mod-jokes)
 
 - `yarn add helio-mod-jokes` or `npm install helio-mod-jokes`
-- `import Jokes from 'helio-mod-jokes'`
-- `{ path: '/jokes', module: Jokes }`
+- `import JokesMod from 'helio-mod-jokes'`
+- `{ path: '/jokes', module: JokesMod }`
 
 ## Build
 
