@@ -129,6 +129,7 @@ const initializeServer = app.initializeServer = () => {
     }
 
     app.use(options.path, instance.router)
+    Log.info(`[MOD REGISTERED] ${instance.name}`)
   })
 
   // Root handler

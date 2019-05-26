@@ -46,7 +46,7 @@ Helio Mods are the easiest way to extend Helio and they remove the need to modif
 
 You can find a mod template in [src/mods/example-mod/index.js](src/mods/example-mod/index.js)
 
-You may either store your mods in the mods folder, or use a yarn/npm package.
+You may either store your mods in the mods folder, or use a npm package.
 
 To use a mod:
 
