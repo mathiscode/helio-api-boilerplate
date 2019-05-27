@@ -4,7 +4,7 @@
   "description": "Extensible backend boilerplate utilizing Express.js, Mongoose, JWT, and User registration/authentication",
   "main": "dist/index.js",
   "scripts": {
-    "start": "npm-run-all build server:prod",
+    "start": "npm run server:prod",
     "server": "cross-env NODE_ENVIRONMENT=development nodemon --exec babel-node --require node_modules/dotenv/config src/index.js",
     "server:prod": "node -r dotenv/config dist/index.js",
     "clean": "rimraf dist",
