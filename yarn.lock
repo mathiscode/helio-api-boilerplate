@@ -2403,9 +2403,9 @@ express@^4.16.4:
     vary "~1.1.2"
 
 express@^4.17.0:
-  version "4.17.0"
-  resolved "https://registry.yarnpkg.com/express/-/express-4.17.0.tgz#288af62228a73f4c8ea2990ba3b791bb87cd4438"
-  integrity sha512-1Z7/t3Z5ZnBG252gKUPyItc4xdeaA0X934ca2ewckAsVsw9EG71i++ZHZPYnus8g/s5Bty8IMpSVEuRkmwwPRQ==
+  version "4.17.1"
+  resolved "https://registry.yarnpkg.com/express/-/express-4.17.1.tgz#4491fc38605cf51f8629d39c2b5d026f98a4c134"
+  integrity sha512-mHJ9O79RqluphRrcw2X/GTh3k9tVv8YcoyY4Kkh4WDMUYKRZUq0h1o0w2rrrxBqM7VoeUVqgb27xlEMXTnYt4g==
   dependencies:
     accepts "~1.3.7"
     array-flatten "1.1.1"
@@ -2996,14 +2996,15 @@ helio-mod-jokes@^1.0.0:
     express "^4.17.0"
     official_joke_api "https://github.com/mathiscode/official_joke_api.git"
 
-helio-mod-users@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/helio-mod-users/-/helio-mod-users-1.0.1.tgz#97c060c70be1a4c6ec2986445bc6b39041174a37"
-  integrity sha512-3sAnczSVkNm1lGpPQIu7o0Himt41Syp6EDF7wNP8BZYBz8+Zy1xKoKkop5XyIFWOEm0oUnWw67M91OwAgJeWTA==
+helio-mod-users@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/helio-mod-users/-/helio-mod-users-1.1.0.tgz#a93eea2acef643dbe663f636d672dbb99615a4b2"
+  integrity sha512-5dyiMafjqZOC2wNpPftSkppqaXXgpJeIO3jU+RbnmYbF3lbOpRtSt7rk7UZ4Ebq/+OPl27VAn3OPnPpN18y26g==
   dependencies:
     bcryptjs "^2.4.3"
     express "^4.17.0"
     jsonwebtoken "^8.5.1"
+    mongoose "^5.5.11"
     uuid "^3.3.2"
 
 homedir-polyfill@^1.0.1:
@@ -4168,6 +4169,17 @@ mongodb-core@3.2.2:
   optionalDependencies:
     saslprep "^1.0.0"
 
+mongodb-core@3.2.5:
+  version "3.2.5"
+  resolved "https://registry.yarnpkg.com/mongodb-core/-/mongodb-core-3.2.5.tgz#08f9c78f44bba6a22d04fd3bce6bb257d82c7d35"
+  integrity sha512-czmFd/7Cy+PxItL5KewYgkKTJGb2JyC1PdIdLBVGHER4Vsgu/A+fXDDNO+PLuyHNdh7qbH2XyLP4HHAifgBBoQ==
+  dependencies:
+    bson "^1.1.1"
+    require_optional "^1.0.1"
+    safe-buffer "^5.1.2"
+  optionalDependencies:
+    saslprep "^1.0.0"
+
 mongodb-core@3.2.6:
   version "3.2.6"
   resolved "https://registry.yarnpkg.com/mongodb-core/-/mongodb-core-3.2.6.tgz#5522b721a744720a27a07b29177d10fe849ad20e"
@@ -4187,6 +4199,14 @@ mongodb@3.2.2:
     mongodb-core "3.2.2"
     safe-buffer "^5.1.2"
 
+mongodb@3.2.5:
+  version "3.2.5"
+  resolved "https://registry.yarnpkg.com/mongodb/-/mongodb-3.2.5.tgz#36d9850e4f5eb40e4bc551bf3bd91f601d4824c4"
+  integrity sha512-VEu2nsfFMwWA6q6JVnlJ2kNVwjluU4op2J/YiG1LeI14t9HotLXbg8w3I794BvezC4ZCZ/wBTTdby01txalwwQ==
+  dependencies:
+    mongodb-core "3.2.5"
+    safe-buffer "^5.1.2"
+
 mongodb@^3.1.13:
   version "3.2.6"
   resolved "https://registry.yarnpkg.com/mongodb/-/mongodb-3.2.6.tgz#bfd23bc0ae6cc57443cd256aec24aa4dc2b99f2f"
@@ -4199,6 +4219,25 @@ mongoose-legacy-pluralize@1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/mongoose-legacy-pluralize/-/mongoose-legacy-pluralize-1.0.2.tgz#3ba9f91fa507b5186d399fb40854bff18fb563e4"
   integrity sha512-Yo/7qQU4/EyIS8YDFSeenIvXxZN+ld7YdV9LqFVQJzTLye8unujAWPZ4NWKfFA+RNjh+wvTWKY9Z3E5XM6ZZiQ==
+
+mongoose@^5.5.11:
+  version "5.5.11"
+  resolved "https://registry.yarnpkg.com/mongoose/-/mongoose-5.5.11.tgz#3e83ea51b8e71d6e6af6cd48871843c8f523e73f"
+  integrity sha512-jLYPk4jYe1N5CNwBcj48tQwQZ5Dc8VsnAjdMiqaKh5+CwU9EqEfuEtYMkFhJLu/LaTA4LN7crFzydGHdlAZtmg==
+  dependencies:
+    async "2.6.2"
+    bson "~1.1.1"
+    kareem "2.3.0"
+    mongodb "3.2.5"
+    mongodb-core "3.2.5"
+    mongoose-legacy-pluralize "1.0.2"
+    mpath "0.6.0"
+    mquery "3.2.0"
+    ms "2.1.1"
+    regexp-clone "0.0.1"
+    safe-buffer "5.1.2"
+    sift "7.0.1"
+    sliced "1.0.1"
 
 mongoose@^5.5.4:
   version "5.5.4"
@@ -4223,6 +4262,11 @@ mpath@0.5.2:
   version "0.5.2"
   resolved "https://registry.yarnpkg.com/mpath/-/mpath-0.5.2.tgz#b1eac586dffb5175d2f51ca9aacba35d9940dd41"
   integrity sha512-NOeCoW6AYc3hLi30npe7uzbD9b4FQZKH40YKABUCCvaKKL5agj6YzvHoNx8jQpDMNPgIa5bvSZQbQpWBAVD0Kw==
+
+mpath@0.6.0:
+  version "0.6.0"
+  resolved "https://registry.yarnpkg.com/mpath/-/mpath-0.6.0.tgz#aa922029fca4f0f641f360e74c5c1b6a4c47078e"
+  integrity sha512-i75qh79MJ5Xo/sbhxrDrPSEG0H/mr1kcZXJ8dH6URU5jD/knFxCVqVC/gVSW7GIXL/9hHWlT9haLbCXWOll3qw==
 
 mquery@3.2.0:
   version "3.2.0"
