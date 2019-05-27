@@ -5,6 +5,8 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports["default"] = void 0;
 
+require("@babel/polyfill");
+
 var _package = _interopRequireDefault(require("../package.json"));
 
 var _express = _interopRequireDefault(require("express"));
@@ -21,17 +23,15 @@ var _expressRateLimit = _interopRequireDefault(require("express-rate-limit"));
 
 var _winstonMongodb = require("winston-mongodb");
 
-var _exampleMod = _interopRequireDefault(require("./mods/example-mod"));
+var _config = require("./config");
 
-var _helioModUsers = _interopRequireDefault(require("helio-mod-users"));
-
-var _helioModJokes = _interopRequireDefault(require("helio-mod-jokes"));
-
-var _User = _interopRequireDefault(require("./models/User"));
-
-var _dotenv = _interopRequireDefault(require("dotenv"));
+var _TokenWhitelist = _interopRequireDefault(require("./models/TokenWhitelist"));
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
+
+function asyncGeneratorStep(gen, resolve, reject, _next, _throw, key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { Promise.resolve(value).then(_next, _throw); } }
+
+function _asyncToGenerator(fn) { return function () { var self = this, args = arguments; return new Promise(function (resolve, reject) { var gen = fn.apply(self, args); function _next(value) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "next", value); } function _throw(err) { asyncGeneratorStep(gen, resolve, reject, _next, _throw, "throw", err); } _next(undefined); }); }; }
 
 function _toConsumableArray(arr) { return _arrayWithoutHoles(arr) || _iterableToArray(arr) || _nonIterableSpread(); }
 
@@ -41,21 +41,9 @@ function _iterableToArray(iter) { if (Symbol.iterator in Object(iter) || Object.
 
 function _arrayWithoutHoles(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = new Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } }
 
-_dotenv["default"].config();
-
-var PublicPaths = ['/'].concat(_toConsumableArray(process.env.PUBLIC_PATHS ? process.env.PUBLIC_PATHS.split(',') : [])); // Set mods to load
-
-var Mods = [{
-  path: '/example',
-  module: _exampleMod["default"]
-}, {
-  path: '/user',
-  module: _helioModUsers["default"]
-}, {
-  path: '/jokes',
-  module: _helioModJokes["default"]
-}]; // Set Core routes to load
+var PublicPaths = ['/'].concat(_toConsumableArray(process.env.PUBLIC_PATHS ? process.env.PUBLIC_PATHS.split(',') : [])); // Set Core routes to load
 // You should be using a mod instead, but this is here in case you need it
+// format: { path: '/path', module: <Express Router or Middleware Function> }
 
 var routes = [];
 var app = (0, _express["default"])(); // Setup and connect to database; server will not run until connected
@@ -77,9 +65,8 @@ if (!process.env.JWT_SECRET) {
 
 
 var LogTransports = [];
-LogTransports.push(new _winstonMongodb.MongoDB({
-  db: process.env.DB_URI,
-  silent: process.env.NODE_ENV === 'testing' || process.env.LOG_TO_DB === 'false'
+if (process.env.NODE_ENV !== 'testing' && process.env.LOG_TO_DB !== 'false') LogTransports.push(new _winstonMongodb.MongoDB({
+  db: process.env.DB_URI
 }));
 LogTransports.push(new _winston["default"].transports.Console({
   format: _winston["default"].format.simple(),
@@ -110,7 +97,10 @@ var initializeServer = app.initializeServer = function () {
 
   var limiter = (0, _expressRateLimit["default"])({
     windowMs: process.env.RATE_LIMIT_WINDOW || 15 * 60 * 1000,
-    max: process.env.RATE_LIMIT_MAX_REQUESTS_PER_WINDOW || 100
+    max: process.env.RATE_LIMIT_MAX_REQUESTS_PER_WINDOW || 100,
+    skip: function skip(req, res) {
+      return req.ip === '127.0.0.1' || req.ip === '::1';
+    }
   });
   app.use(limiter); // Provide logger to routes
 
@@ -119,7 +109,7 @@ var initializeServer = app.initializeServer = function () {
     next();
   }); // Setup mods public paths
 
-  Mods.forEach(function (options) {
+  _config.Mods.forEach(function (options) {
     var Mod = options.module;
     var instance = new Mod(options);
     var modPublicPaths = instance.publicPaths || [];
@@ -127,31 +117,62 @@ var initializeServer = app.initializeServer = function () {
     instance = null;
   }); // Setup JWT authentication
 
+
+  var checkTokenRevocation =
+  /*#__PURE__*/
+  function () {
+    var _ref = _asyncToGenerator(
+    /*#__PURE__*/
+    regeneratorRuntime.mark(function _callee(req, payload, done) {
+      var inWhitelist;
+      return regeneratorRuntime.wrap(function _callee$(_context) {
+        while (1) {
+          switch (_context.prev = _context.next) {
+            case 0:
+              _context.next = 2;
+              return _TokenWhitelist["default"].countDocuments({
+                token: req.headers.authorization.replace('Bearer ', '')
+              });
+
+            case 2:
+              inWhitelist = _context.sent;
+              return _context.abrupt("return", done(null, !inWhitelist));
+
+            case 4:
+            case "end":
+              return _context.stop();
+          }
+        }
+      }, _callee);
+    }));
+
+    return function checkTokenRevocation(_x, _x2, _x3) {
+      return _ref.apply(this, arguments);
+    };
+  }();
+
   app.use((0, _expressJwt["default"])({
     secret: process.env.JWT_SECRET,
     credentialsRequired: false
   })); // decode token even on public paths
 
   app.use((0, _expressJwt["default"])({
-    secret: process.env.JWT_SECRET
+    secret: process.env.JWT_SECRET,
+    isRevoked: checkTokenRevocation
   }).unless({
     path: PublicPaths
   })); // protect private paths
-  // Setup models to be provided to mods
+  // Setup mod routes
 
-  var ModModels = [{
-    name: 'User',
-    model: _User["default"]
-  }]; // Setup mod routes
-
-  Mods.forEach(function (options) {
+  _config.Mods.forEach(function (options) {
     var Mod = options.module;
     var instance = new Mod(options);
 
     if (instance.receiveModels && instance.needModels) {
-      var giveModels = ModModels.filter(function (model) {
+      var giveModels = _config.ModModels.filter(function (model) {
         return instance.needModels.includes(model.name);
       });
+
       instance.receiveModels(giveModels);
     }
 
@@ -159,10 +180,11 @@ var initializeServer = app.initializeServer = function () {
     Log.info("[MOD REGISTERED] ".concat(instance.name));
   }); // Root handler
 
+
   app.get('/', function (req, res) {
     res.json({
       name: process.env.NAME || 'Helio API Server',
-      version: process.env.SHOW_VERSION ? _package["default"].version : null
+      version: process.env.SHOW_VERSION === 'true' ? _package["default"].version : null
     });
   }); // Setup core routes
 
@@ -177,7 +199,7 @@ var initializeServer = app.initializeServer = function () {
   }); // Catch other errors
 
   app.use(function (err, req, res, next) {
-    if (process.env.CONSOLE_ERRORS === 'true') Log.error('APP ERROR:', err.stack);
+    if (process.env.CONSOLE_ERRORS === 'true' && err.name !== 'UnauthorizedError') Log.error('APP ERROR:', err.stack);
     if (err.name === 'UnauthorizedError') return res.status(401).json({
       error: 'Invalid token'
     });

@@ -5,12 +5,15 @@
   "main": "dist/index.js",
   "scripts": {
     "start": "npm-run-all build server:prod",
-    "server": "cross-env NODE_ENVIRONMENT=development nodemon --exec babel-node src/index.js",
-    "server:prod": "node dist/index.js",
+    "server": "cross-env NODE_ENVIRONMENT=development nodemon --exec babel-node --require node_modules/dotenv/config src/index.js",
+    "server:prod": "node -r dotenv/config dist/index.js",
     "clean": "rimraf dist",
     "transpile": "babel src --out-dir dist",
     "build": "cross-env NODE_ENV=production npm-run-all clean transpile",
-    "test": "standard && cross-env NODE_ENV=testing PORT=0 JWT_SECRET=supersecret mocha --require @babel/register --exit",
+    "test": "standard && cross-env NODE_ENV=testing PORT=0 mocha --require @babel/register --require dotenv/config --exit",
+    "test:mods": "npm-run-all test:mods:users test:mods:blog",
+    "test:mods:users": "newman run -e test/postman/postman_environment.json test/postman/collections/UsersMod.json",
+    "test:mods:blog": "newman run -e test/postman/postman_environment.json test/postman/collections/BlogMod.json",
     "commit": "commit-wizard"
   },
   "repository": {
@@ -29,6 +32,7 @@
     ]
   },
   "dependencies": {
+    "@babel/polyfill": "^7.4.4",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
     "dotenv": "^7.0.0",
@@ -61,6 +65,7 @@
     "eslint-plugin-promise": "^4.1.1",
     "eslint-plugin-standard": "^4.0.0",
     "mocha": "^6.1.4",
+    "newman": "^4.5.0",
     "nodemon": "^1.18.11",
     "pre-git": "^3.17.1",
     "standard": "^12.0.1"

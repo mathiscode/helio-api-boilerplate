@@ -17,13 +17,10 @@ const Schema = mongoose.Schema({
     name: String
   },
 
-  settings: {
-    subscribeToNewsletter: { type: Boolean, default: true }
-  },
-
+  settings: {},
   clientSettings: {},
   serverSettings: {}
-})
+}, { timestamps: true })
 
 Schema.methods.validPassword = function (password) {
   return bcrypt.compareSync(password, this.password)

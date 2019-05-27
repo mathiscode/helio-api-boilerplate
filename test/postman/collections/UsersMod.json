@@ -1,0 +1,672 @@
+{
+	"info": {
+		"_postman_id": "6eed1ce2-2e66-468f-b58a-c7c280d9e466",
+		"name": "Helio Users",
+		"description": "Requests related to Helio Users",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Auth",
+			"item": [
+				{
+					"name": "Register",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "12e867cd-788b-4e15-9672-d9bc2daaa893",
+								"exec": [
+									"pm.test('Status code is 200', () => {",
+									"    pm.response.to.have.status(200)",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"email\": \"{{defaultEmail}}\", \"password\": \"{{defaultPassword}}\" }"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/user/register",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "fc177e7e-16f7-4a6b-be93-35c8b0b68f85",
+								"exec": [
+									"pm.environment.set('authToken', pm.response.json().token)",
+									"",
+									"pm.test('Status code is 200', () => {",
+									"    pm.response.to.have.status(200)",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"auth": {
+							"type": "noauth"
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"email\": \"{{defaultEmail}}\", \"password\": \"{{defaultPassword}}\" }"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/user/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user",
+								"login"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Settings",
+			"item": [
+				{
+					"name": "/user/settings",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "1a291ca8-ccf0-467d-9e08-5680597e2335",
+								"exec": [
+									"pm.test('Status code is 200', () => {",
+									"    pm.response.to.have.status(200)",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/user/settings",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user",
+								"settings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/user/settings/subscribeToNewsletter",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "acaba1ee-4f27-4a40-a639-37f01d118c91",
+								"exec": [
+									"pm.test('Status code is 200', () => {",
+									"    pm.response.to.have.status(200)",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/user/settings/subscribeToNewsletter",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user",
+								"settings",
+								"subscribeToNewsletter"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/user/settings/subscribeToNewsletter",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "848f96ad-d705-4f30-8705-75a3cd283e1a",
+								"exec": [
+									"pm.test('Status code is 200', () => {",
+									"    pm.response.to.have.status(200)",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"type": "text",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"value\": false }"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/user/settings/subscribeToNewsletter",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user",
+								"settings",
+								"subscribeToNewsletter"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/user/client-settings",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "e0ea3e9a-2d24-43b6-b56d-9b655907cf4a",
+								"exec": [
+									"pm.test('Status code is 200', () => {",
+									"    pm.response.to.have.status(200)",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/user/client-settings",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user",
+								"client-settings"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/user/client-settings",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "2684fd2d-55c6-4b07-9b04-e33efbc03f34",
+								"exec": [
+									"pm.test('Status code is 200', () => {",
+									"    pm.response.to.have.status(200)",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"one\": 2, \"two\": 3, \"foo\": \"bar\", \"bar\": \"baz\" }"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/user/client-settings",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user",
+								"client-settings"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Profile",
+			"item": [
+				{
+					"name": "/user/profile",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "eb109d5c-8fc4-4be8-9648-6157964b2e92",
+								"exec": [
+									"pm.test('Status code is 200', () => {",
+									"    pm.response.to.have.status(200)",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/user/profile",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user",
+								"profile"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/user/profile/name",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "59f5bc1a-7fc8-4df7-85ac-a03fb9412c9d",
+								"exec": [
+									"pm.test('Status code is 200', () => {",
+									"    pm.response.to.have.status(200)",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{baseUrl}}/user/profile/name",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user",
+								"profile",
+								"name"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/user/profile/name",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "38498a47-6f1b-4d64-bd3f-117029041046",
+								"exec": [
+									"pm.test('Status code is 200', () => {",
+									"    pm.response.to.have.status(200)",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"value\": \"John Doe\" }"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/user/profile/name",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user",
+								"profile",
+								"name"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "/user/profile/phone",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"id": "5b68229e-1e0b-42cf-9384-8f777b93185a",
+								"exec": [
+									"pm.test('Status code is 200', () => {",
+									"    pm.response.to.have.status(200)",
+									"})"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{ \"value\": \"+18004444444\" }"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/user/profile/phone",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user",
+								"profile",
+								"phone"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "/user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "aab782b0-e733-4b55-b5cc-dc7b9ede3183",
+						"exec": [
+							"pm.test('Status code is 200', () => {",
+							"    pm.response.to.have.status(200)",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/user",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"user"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/user/username",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "6b9b543f-7f7a-4bdd-91b1-1ca2118070c1",
+						"exec": [
+							"pm.test('Status code is 200', () => {",
+							"    pm.response.to.have.status(200)",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/user/username",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"user",
+						"username"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/user/username/availability",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "4aafd485-d7f5-4915-85bc-19272be3c9f3",
+						"exec": [
+							"pm.test('Status code is 200', () => {",
+							"    pm.response.to.have.status(200)",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{ \"username\": \"MyUsername\" }"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/user/username/availability",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"user",
+						"username",
+						"availability"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/user/password",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "fa5a80de-fe90-435e-b2f1-dba86f44ea7e",
+						"exec": [
+							"pm.test('Status code is 200', () => {",
+							"    pm.response.to.have.status(200)",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"currentPassword\": \"{{defaultPassword}}\",\r\n  \"newPassword\": \"testtest1234\",\r\n  \"confirmPassword\": \"testtest1234\"\r\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/user/password",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"user",
+						"password"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/user",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "531d460b-85a2-4b33-8c08-50a9cf81b45b",
+						"exec": [
+							"pm.test('Status code is 200', () => {",
+							"    pm.response.to.have.status(200)",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/user",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"user"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{authToken}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "c3cba4aa-f36f-45f7-b439-8c150c15583f",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "90fa8686-57b9-43b0-9fa5-b7654c8b4086",
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	]
+}

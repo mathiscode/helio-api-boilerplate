@@ -1,6 +1,8 @@
+# THIS FILE IS DEPRECATED; MOVING TO POSTMAN COLLECTION RUNS
+
 @baseUrl = http://localhost:3001
 @defaultEmail = test@test.com
-@defaultPassword = testtest2
+@defaultPassword = testtest1234
 
 
 GET {{baseUrl}}
@@ -63,12 +65,22 @@ Authorization: Bearer {{authToken}}
 
 ###
 
-POST {{baseUrl}}/user/profile/name
+PUT {{baseUrl}}/user/profile/name
 Content-Type: application/json
 Authorization: Bearer {{authToken}}
 
 {
   "value": "John Doe"
+}
+
+###
+
+PUT {{baseUrl}}/user/profile/phone
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+  "value": "+18004444444"
 }
 
 ###
@@ -82,7 +94,7 @@ Authorization: Bearer {{authToken}}
 
 ###
 
-POST {{baseUrl}}/user/settings/subscribeToNewsletter/
+PUT {{baseUrl}}/user/settings/subscribeToNewsletter/
 Content-Type: application/json
 Authorization: Bearer {{authToken}}
 
@@ -110,7 +122,7 @@ Authorization: Bearer {{authToken}}
 
 ###
 
-POST {{baseUrl}}/user/client-settings
+PUT {{baseUrl}}/user/client-settings
 Content-Type: application/json
 Authorization: Bearer {{authToken}}
 
@@ -128,3 +140,19 @@ GET {{baseUrl}}/example/add/4/232
 ###
 
 GET {{baseUrl}}/example/test-error
+
+###
+
+GET {{baseUrl}}/blog
+Authorization: Bearer {{authToken}}
+
+###
+
+POST {{baseUrl}}/blog
+Content-Type: application/json
+Authorization: Bearer {{authToken}}
+
+{
+  "title": "Hey there!",
+  "content": "This is a blog post!"
+}

@@ -1,3 +1,4 @@
+import '@babel/polyfill'
 import Package from '../package.json'
 import express from 'express'
 import bodyParser from 'body-parser'
@@ -7,31 +8,17 @@ import winston from 'winston'
 import rateLimit from 'express-rate-limit'
 import { MongoDB } from 'winston-mongodb'
 
-// Import mods
-import ExampleMod from './mods/example-mod'
-import UsersMod from 'helio-mod-users'
-import JokesMod from 'helio-mod-jokes'
-
-// Import models
-import UserModel from './models/User'
-
-import dotenv from 'dotenv'
-dotenv.config()
+import { Mods, ModModels } from './config'
+import TokenWhitelist from './models/TokenWhitelist'
 
 let PublicPaths = [
   '/',
   ...(process.env.PUBLIC_PATHS ? process.env.PUBLIC_PATHS.split(',') : [])
 ]
 
-// Set mods to load
-const Mods = [
-  { path: '/example', module: ExampleMod },
-  { path: '/user', module: UsersMod },
-  { path: '/jokes', module: JokesMod }
-]
-
 // Set Core routes to load
 // You should be using a mod instead, but this is here in case you need it
+// format: { path: '/path', module: <Express Router or Middleware Function> }
 const routes = []
 
 const app = express()
@@ -54,10 +41,7 @@ if (!process.env.JWT_SECRET) {
 // Setup logger
 const LogTransports = []
 
-LogTransports.push(new MongoDB({
-  db: process.env.DB_URI,
-  silent: process.env.NODE_ENV === 'testing' || process.env.LOG_TO_DB === 'false'
-}))
+if (process.env.NODE_ENV !== 'testing' && process.env.LOG_TO_DB !== 'false') LogTransports.push(new MongoDB({ db: process.env.DB_URI }))
 
 LogTransports.push(new winston.transports.Console({
   format: winston.format.simple(),
@@ -82,13 +66,15 @@ mongoose.connect(process.env.DB_URI, (err) => {
 const initializeServer = app.initializeServer = () => {
   app.disable('x-powered-by')
   app.use(bodyParser.json())
+
   // Uncomment the next line if you're behind a reverse proxy (Heroku, Bluemix, AWS ELB, Nginx, etc)
   // app.set('trust proxy', 1)
 
   // Setup rate limiting
   const limiter = rateLimit({
     windowMs: process.env.RATE_LIMIT_WINDOW || 15 * 60 * 1000,
-    max: process.env.RATE_LIMIT_MAX_REQUESTS_PER_WINDOW || 100
+    max: process.env.RATE_LIMIT_MAX_REQUESTS_PER_WINDOW || 100,
+    skip: (req, res) => req.ip === '127.0.0.1' || req.ip === '::1'
   })
 
   app.use(limiter)
@@ -109,13 +95,13 @@ const initializeServer = app.initializeServer = () => {
   })
 
   // Setup JWT authentication
-  app.use(jwt({ secret: process.env.JWT_SECRET, credentialsRequired: false })) // decode token even on public paths
-  app.use(jwt({ secret: process.env.JWT_SECRET }).unless({ path: PublicPaths })) // protect private paths
+  const checkTokenRevocation = async (req, payload, done) => {
+    const inWhitelist = await TokenWhitelist.countDocuments({ token: req.headers.authorization.replace('Bearer ', '') })
+    return done(null, !inWhitelist)
+  }
 
-  // Setup models to be provided to mods
-  const ModModels = [
-    { name: 'User', model: UserModel }
-  ]
+  app.use(jwt({ secret: process.env.JWT_SECRET, credentialsRequired: false })) // decode token even on public paths
+  app.use(jwt({ secret: process.env.JWT_SECRET, isRevoked: checkTokenRevocation }).unless({ path: PublicPaths })) // protect private paths
 
   // Setup mod routes
   Mods.forEach(options => {
@@ -135,7 +121,7 @@ const initializeServer = app.initializeServer = () => {
   app.get('/', (req, res) => {
     res.json({
       name: process.env.NAME || 'Helio API Server',
-      version: process.env.SHOW_VERSION ? Package.version : null
+      version: process.env.SHOW_VERSION === 'true' ? Package.version : null
     })
   })
 
@@ -151,7 +137,7 @@ const initializeServer = app.initializeServer = () => {
 
   // Catch other errors
   app.use((err, req, res, next) => {
-    if (process.env.CONSOLE_ERRORS === 'true') Log.error('APP ERROR:', err.stack)
+    if (process.env.CONSOLE_ERRORS === 'true' && err.name !== 'UnauthorizedError') Log.error('APP ERROR:', err.stack)
     if (err.name === 'UnauthorizedError') return res.status(401).json({ error: 'Invalid token' })
     return res.status(500).json({ error: 'Internal API error' })
   })

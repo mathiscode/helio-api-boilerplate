@@ -1,0 +1,269 @@
+{
+	"info": {
+		"_postman_id": "56339469-bba8-4de8-8b1f-3577b7e4b1cd",
+		"name": "Blog Mod",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "/blog",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "e8e1e408-7d7b-480c-ae66-24cd42ea880f",
+						"exec": [
+							"pm.environment.set('lastBlogPost', pm.response.json().id)",
+							"",
+							"pm.test('Status code is 200', () => {",
+							"    pm.response.to.have.status(200)",
+							"})",
+							"",
+							"console.log(`Created ${pm.response.json().id}`)"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"title\": \"Hey there!\",\r\n  \"content\": \"This is a blog post!\"\r\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/blog",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"blog"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/blog",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "94769afb-f7aa-4f01-b1b6-3569bf57c44f",
+						"exec": [
+							"pm.test('Status code is 200', () => {",
+							"    pm.response.to.have.status(200)",
+							"})"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/blog",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"blog"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/blog/:id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "9977ea68-a054-4419-9e7a-c1e4e56fc706",
+						"exec": [
+							"pm.test('Status code is 200', () => {",
+							"    pm.response.to.have.status(200)",
+							"})",
+							"",
+							"console.log(`Updated ${pm.response.json().id}`)"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "PATCH",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n  \"title\": \"Hey there again!\",\r\n  \"content\": \"This is an edited blog post!\",\r\n  \"public\": false\r\n}"
+				},
+				"url": {
+					"raw": "{{baseUrl}}/blog/{{lastBlogPost}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"blog",
+						"{{lastBlogPost}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/blog/:id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "91316e35-7f34-44d0-9cba-0ae088bc43c7",
+						"exec": [
+							"pm.test('Status code is 200', () => {",
+							"    pm.response.to.have.status(200)",
+							"})",
+							"",
+							"console.log(`Got ${pm.response.json().id}`)"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/blog/{{lastBlogPost}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"blog",
+						"{{lastBlogPost}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "/blog/:id",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "5f8d881e-1799-4403-8bf5-f698ca3e88ff",
+						"exec": [
+							"pm.test('Status code is 200', () => {",
+							"    pm.response.to.have.status(200)",
+							"})",
+							"",
+							"console.log(`Deleted ${pm.response.json().id}`)"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [],
+				"url": {
+					"raw": "{{baseUrl}}/blog/{{lastBlogPost}}",
+					"host": [
+						"{{baseUrl}}"
+					],
+					"path": [
+						"blog",
+						"{{lastBlogPost}}"
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"auth": {
+		"type": "bearer",
+		"bearer": [
+			{
+				"key": "token",
+				"value": "{{authToken}}",
+				"type": "string"
+			}
+		]
+	},
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"id": "8cc15c90-8974-4fea-9087-8e373e693e25",
+				"type": "text/javascript",
+				"exec": [
+					"if (!pm.environment.get('authToken')) {",
+					"    pm.sendRequest({",
+					"        url: pm.environment.get('baseUrl') + '/user/register',",
+					"        method: 'POST',",
+					"        header: { 'content-type': 'application/json' },",
+					"        body: {",
+					"            mode: 'raw',",
+					"            raw: JSON.stringify({",
+					"                email: pm.environment.get('defaultEmail'),",
+					"                password: pm.environment.get('defaultPassword')",
+					"            })",
+					"        }",
+					"    }, (err, res) => {",
+					"        pm.sendRequest({",
+					"            url: pm.environment.get('baseUrl') + '/user/login',",
+					"            method: 'POST',",
+					"            header: { 'content-type': 'application/json' },",
+					"            body: {",
+					"                mode: 'raw',",
+					"                raw: JSON.stringify({",
+					"                    email: pm.environment.get('defaultEmail'),",
+					"                    password: pm.environment.get('defaultPassword')",
+					"                })",
+					"            }",
+					"        }, (err, res) => {",
+					"            pm.environment.set('authToken', res.json().token)",
+					"        })",
+					"    })",
+					"}"
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"id": "c5f98d52-e5b8-49cc-832d-420e9be6ab73",
+				"type": "text/javascript",
+				"exec": [
+					"if (pm.request.method === 'DELETE' && pm.request.url.path[0] === 'blog') {",
+					"    console.log('End of run; deleting user..')",
+					"",
+					"    pm.sendRequest({",
+					"        url: pm.environment.get('baseUrl') + '/user',",
+					"        method: 'DELETE',",
+					"        header: { authorization: `Bearer ${pm.environment.get('authToken')}` }",
+					"    }, (err, res) => {",
+					"        pm.environment.unset('authToken')",
+					"    })",
+					"}"
+				]
+			}
+		}
+	]
+}
