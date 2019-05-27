@@ -1,0 +1,42 @@
+{
+  "addons": [
+
+  ],
+  "buildpacks": [
+    {
+      "url": "heroku/nodejs"
+    }
+  ],
+  "env": {
+    "CONSOLE_ERRORS": {
+      "required": true
+    },
+    "CONSOLE_LOG": {
+      "required": true
+    },
+    "DB_URI": {
+      "required": true
+    },
+    "JWT_SECRET": {
+      "generator": "secret"
+    },
+    "JWT_TIMEOUT": {
+      "required": true
+    },
+    "LOG_TO_DB": {
+      "required": true
+    },
+    "SHOW_VERSION": {
+      "required": true
+    }
+  },
+  "formation": {
+    "web": {
+      "quantity": 1
+    }
+  },
+  "name": "helio-api-boilerplate",
+  "scripts": {
+  },
+  "stack": "heroku-18"
+}
