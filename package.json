@@ -14,6 +14,12 @@
     "test:mods": "npm-run-all test:mods:users test:mods:blog",
     "test:mods:users": "newman run -e test/postman/postman_environment.json test/postman/collections/UsersMod.json",
     "test:mods:blog": "newman run -e test/postman/postman_environment.json test/postman/collections/BlogMod.json",
+    "test:mods:staging": "npm-run-all test:mods:staging:users test:mods:staging:blog",
+    "test:mods:staging:users": "newman run -e test/postman/postman_environment_staging.json test/postman/collections/UsersMod.json",
+    "test:mods:staging:blog": "newman run -e test/postman/postman_environment_staging.json test/postman/collections/BlogMod.json",
+    "test:mods:prod": "npm-run-all test:mods:prod:users test:mods:prod:blog",
+    "test:mods:prod:users": "newman run -e test/postman/postman_environment_prod.json test/postman/collections/UsersMod.json",
+    "test:mods:prod:blog": "newman run -e test/postman/postman_environment_prod.json test/postman/collections/BlogMod.json",
     "commit": "commit-wizard"
   },
   "repository": {
