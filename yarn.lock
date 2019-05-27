@@ -2996,10 +2996,10 @@ helio-mod-jokes@^1.0.0:
     express "^4.17.0"
     official_joke_api "https://github.com/mathiscode/official_joke_api.git"
 
-helio-mod-users@^1.1.0:
-  version "1.1.0"
-  resolved "https://registry.yarnpkg.com/helio-mod-users/-/helio-mod-users-1.1.0.tgz#a93eea2acef643dbe663f636d672dbb99615a4b2"
-  integrity sha512-5dyiMafjqZOC2wNpPftSkppqaXXgpJeIO3jU+RbnmYbF3lbOpRtSt7rk7UZ4Ebq/+OPl27VAn3OPnPpN18y26g==
+helio-mod-users@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/helio-mod-users/-/helio-mod-users-1.1.1.tgz#44992b4d5f600b4ee745ea271ab47d17191b7a60"
+  integrity sha512-mefLDapAnCSMWh6q8YcFG97otNU26Y9HhIHMmCA5FLv1vryb2YS09B0lmIN2guSUqVTPVjAap+hGxzZdKxkAPQ==
   dependencies:
     bcryptjs "^2.4.3"
     express "^4.17.0"
