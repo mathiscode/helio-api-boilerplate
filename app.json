@@ -1,4 +1,6 @@
 {
+  "description": "Extensible backend boilerplate utilizing Express.js, Mongoose, JWT, and User registration/authentication",
+
   "addons": [
 
   ],
@@ -35,7 +37,6 @@
       "quantity": 1
     }
   },
-  "name": "helio-api-boilerplate",
   "scripts": {
   },
   "stack": "heroku-18"

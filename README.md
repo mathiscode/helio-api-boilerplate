@@ -24,15 +24,20 @@ Helio is an easily extensible backend utilizing Express.js, Mongoose, JWT, and U
 
 - [Get Started](#get-started)
 - [Mods](#mods)
-  - [Official Helio Mods](#official-helio-mods)
-- [Build](#build)
+  - [Using packaged mods](#using-packaged-mods)
+  - [Creating custom mods](#creating-custom-mods)
+  - [Official Helio mods](#official-helio-mods)
+- [Deploying](#deploying)
+  - [Heroku](#heroku)
+- [Testing](#testing)
+- [I don't like how Helio does [X]](#i-dont-like-how-helio-does-x)
 
 ---
 
 ## Get Started
 
 ```sh
-git clone --depth=1 https://github.com/mathiscode/helio-api-boilerplate.git
+git clone https://github.com/mathiscode/helio-api-boilerplate.git
 cd helio-api-boilerplate
 cp .env.example .env # use the example environment; modify as needed
 yarn # to install dependencies; or npm install
@@ -44,20 +49,29 @@ yarn start # for production; or npm start
 
 Helio Mods are the easiest way to extend Helio and they remove the need to modify core routes.
 
-You can find a mod template in [src/mods/example-mod/index.js](src/mods/example-mod/index.js)
+**They're just classes, so don't feel overwhelmed.**
 
-You may either store your mods in the mods folder, or use a npm package.
+### Using packaged mods
 
-To use a mod:
-
-1. *Optional*: `yarn add <package>` or `npm install <package>` (eg. helio-mod-jokes)
-     - Or create your mod inside `src/mods`
+1. `yarn add <package>` or `npm install <package>` (eg. helio-mod-jokes)
 2. Modify [src/config.js](src/config.js):
     - `import ModName from <package>` under the "Import mods" comment
     - Add an object to the Mods array under the "Set mods to load" comment:
       - `{ path: '/my-mod', module: ModName }`
 
-### Official Helio Mods
+### Creating custom mods
+
+1. Create a folder for your mod in `src/mods` and create an `index.js`
+2. For reference, see:
+      - [src/mods/example-mod/index.js](src/mods/example-mod/index.js) for a fully commented example that uses all available features
+      - [src/mods/minimal-mod/index.js](src/mods/minimal-mod/index.js) for a barebones starting point for a new mod
+      - [src/mods/blog-mod/index.js](src/mods/blog-mod/index.js) for a functional real-world example
+3. Modify [src/config.js](src/config.js):
+      - `import MyMod from './mods/my-mod'` under the "Import mods" comment
+      - Add an object to the Mods array under the "Set mods to load" comment:
+        - `{ path: '/my-mod', module: MyMod }`
+
+### Official Helio mods
 
   - [Helio Users](https://github.com/mathiscode/helio-mod-users) - [npm](https://www.npmjs.com/package/helio-mod-users)
 
@@ -71,6 +85,28 @@ To use a mod:
     - `import JokesMod from 'helio-mod-jokes'`
     - `{ path: '/jokes', module: JokesMod }`
 
-## Build
+## Deploying
 
-Just run `yarn build` or `npm run build` and your project will be built into `dist/`
+### Heroku
+
+1. `heroku git:remote -a your-app-name`
+2. `heroku plugins:install heroku-config`
+3. `cp .env.heroku.example .env.heroku`
+4. Modify `.env.heroku` as needed
+5. `heroku config:push -f .env.heroku -a your-app-name`
+6. `git push heroku master`
+
+## Testing
+
+The normal testing process is handled with `yarn test`, which does the following:
+
+- Runs the [standard](https://standardjs.com) linter against the codebase
+- Runs [mocha](https://mochajs.org) - add new tests and modify [src/test/index.js](src/test/index.js) for your use case
+
+The more comprehensive testing during development happens with [Postman](https://www.getpostman.com/) collections and [newman](https://www.npmjs.com/package/newman). More documentation about that will come soon.
+
+For now, if you're interested in using it, collections are found in [src/test/postman/collections](src/test/postman/collections) and while the development server is running (with `yarn server`), run `yarn test:mods`
+
+## I don't like how Helio does [X]
+
+In essence, this is a ready-to-deploy Express server, so if you're comfortable with Express you can easily modify any part of it to fit your needs. Please feel free to gut the code and just keep what makes your life easier! 😁
