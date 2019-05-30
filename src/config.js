@@ -9,6 +9,7 @@ import UserModel from './models/User'
 import BlogPostModel from './models/BlogPost'
 import TokenWhitelistModel from './models/TokenWhitelist'
 
+// Set mods to load
 export const Mods = [
   { path: '/example', module: ExampleMod },
   { path: '/user', module: UsersMod },
