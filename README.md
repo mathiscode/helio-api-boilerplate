@@ -36,6 +36,8 @@ Helio is an easily extensible backend utilizing Express.js, Mongoose, JWT, and U
 
 ## Get Started
 
+You probably want to [fork this repository](https://github.com/mathiscode/helio-api-boilerplate/fork) first, rename the repo to suit your needs, then replace the clone URL below. 
+
 ```sh
 git clone https://github.com/mathiscode/helio-api-boilerplate.git
 cd helio-api-boilerplate
@@ -102,6 +104,8 @@ The normal testing process is handled with `yarn test`, which does the following
 
 - Runs the [standard](https://standardjs.com) linter against the codebase
 - Runs [mocha](https://mochajs.org) - add new tests and modify [src/test/index.js](src/test/index.js) for your use case
+
+If you don't want to enforce the standard code style, just remove `standard &&` from the package.json test script.
 
 The more comprehensive testing during development happens with [Postman](https://www.getpostman.com/) collections and [newman](https://www.npmjs.com/package/newman). More documentation about that will come soon.
 
