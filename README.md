@@ -103,7 +103,7 @@ Helio Mods are the easiest way to extend Helio and they remove the need to modif
 The normal testing process is handled with `yarn test`, which does the following:
 
 - Runs the [standard](https://standardjs.com) linter against the codebase
-- Runs [mocha](https://mochajs.org) - add new tests and modify [src/test/index.js](src/test/index.js) for your use case
+- Runs [mocha](https://mochajs.org) - add new tests and modify [test/index.js](test/index.js) for your use case
 
 If you don't want to enforce the standard code style, just remove `standard &&` from the package.json test script.
 
