@@ -109,7 +109,7 @@ If you don't want to enforce the standard code style, just remove `standard &&` 
 
 The more comprehensive testing during development happens with [Postman](https://www.getpostman.com/) collections and [newman](https://www.npmjs.com/package/newman). More documentation about that will come soon.
 
-For now, if you're interested in using it, collections are found in [/test/postman/collections](/test/postman/collections) and while the development server is running (with `yarn server`), run `yarn test:mods`
+For now, if you're interested in using it, collections are found in [test/postman/collections](test/postman/collections) and while the development server is running (with `yarn server`), run `yarn test:mods`
 
 ## I don't like how Helio does [X]
 
