@@ -8,7 +8,7 @@
     "server": "cross-env NODE_ENVIRONMENT=development nodemon --exec babel-node --require node_modules/dotenv/config src/index.js",
     "server:prod": "node -r dotenv/config dist/index.js",
     "clean": "rimraf dist",
-    "transpile": "babel src --out-dir dist",
+    "transpile": "webpack",
     "build": "cross-env NODE_ENV=production npm-run-all clean transpile",
     "test": "standard && cross-env NODE_ENV=testing PORT=0 mocha --require @babel/register --require dotenv/config --exit",
     "test:mods": "npm-run-all test:mods:users test:mods:blog",
@@ -62,8 +62,10 @@
     "@babel/node": "^7.2.2",
     "@babel/preset-env": "^7.4.4",
     "@babel/register": "^7.4.4",
+    "babel-loader": "^8.0.6",
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
+    "clean-webpack-plugin": "^2.0.2",
     "eslint": "^5.16.0",
     "eslint-config-standard": "^12.0.0",
     "eslint-plugin-import": "^2.17.2",
@@ -74,7 +76,10 @@
     "newman": "^4.5.0",
     "nodemon": "^1.18.11",
     "pre-git": "^3.17.1",
-    "standard": "^12.0.1"
+    "standard": "^12.0.1",
+    "webpack": "^4.32.2",
+    "webpack-cli": "^3.3.2",
+    "webpack-node-externals": "^1.7.2"
   },
   "release": {
     "analyzeCommits": "simple-commit-message"
