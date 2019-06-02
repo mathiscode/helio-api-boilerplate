@@ -3,12 +3,14 @@
 import chai from 'chai'
 import http from 'chai-http'
 
-import app from '../src/index.js'
+import Helio from '../src/index.js'
 
 chai.use(http)
 chai.should()
 
-app.initializeServer()
+const { app } = new Helio()
+
+// app.initializeServer()
 
 describe('Helio', () => {
   describe('GET /', () => {
