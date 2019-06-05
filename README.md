@@ -52,9 +52,9 @@ yarn start # for production; or npm start
 
 ## Importing as a module
 
-<details>
+<details open>
 
-<summary>Click to expand</summary>
+<summary>Click to collapse/expand</summary>
 
 ```sh
 yarn add helio-api-boilerplate helio-mod-users
