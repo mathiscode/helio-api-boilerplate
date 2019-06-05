@@ -68,9 +68,9 @@ import TokenWhitelist from 'helio-api-boilerplate/models/TokenWhitelist'
 
 const server = new Helio({
   // DB URI of a MongoDB instance
-  dbUri: 'mongodb+srv://USER:PASS@HOST/myapp?retryWrites=true', // required
+  dbUri: 'mongodb+srv://USER:PASS@HOST/myapp?retryWrites=true', // required or DB_URI env
   // Random string used to sign JWT tokens
-  jwtSecret: 'supersecret123!', // required
+  jwtSecret: 'supersecret123!', // required or JWT_SECRET env
   // Port number for the server
   port: process.env.PORT || 3001,
   // Prevent automatically listening on port 
