@@ -1,4 +1,4 @@
-<!-- markdownlint-disable MD006 MD009 MD033 -->
+<!-- markdownlint-disable MD006 MD009 MD012 MD033 -->
 
 # ![Helio API Boilerplate](.github/logo.png) <!-- omit in toc -->
 
