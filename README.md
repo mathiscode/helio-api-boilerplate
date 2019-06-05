@@ -54,7 +54,7 @@ yarn start # for production; or npm start
 
 <details open>
 
-<summary>**Click to collapse/expand**</summary>
+<summary><strong>Click to collapse/expand**</strong></summary>
 
 ```sh
 yarn add helio-api-boilerplate helio-mod-users
