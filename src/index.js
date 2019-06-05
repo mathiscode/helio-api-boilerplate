@@ -162,15 +162,14 @@ class Helio {
       return res.status(500).json({ error: 'Internal API error' })
     })
 
-    if (!this.options.noListen) this.listen()
+    if (!options.noListen) this.listen()
   }
 
   listen () {
     // Start listening for requests
-    const options = this.options
-    const port = options.port || process.env.PORT || 3001
+    const port = this.options.port || process.env.PORT || 3001
     this.app.listen(port)
-    this.log.info(`${options.name || process.env.NAME || 'Helio API Server'} listening on port ${port}`)
+    this.log.info(`${this.options.name || process.env.NAME || 'Helio API Server'} listening on port ${port}`)
   }
 }
 
