@@ -53,7 +53,6 @@ yarn start # for production; or npm start
 ## Importing as a module
 
 <details open>
-
 <summary><strong>Click to collapse/expand</strong></summary>
 
 ```sh
@@ -125,6 +124,9 @@ On the `server` object, you can access the following properties and methods:
 
 ## Mods
 
+<details open>
+<summary><strong>Click to collapse/expand</strong></summary>
+
 Helio Mods are the easiest way to extend Helio and they remove the need to modify core routes.
 
 **They're just classes, so don't feel overwhelmed.**
@@ -162,6 +164,8 @@ Helio Mods are the easiest way to extend Helio and they remove the need to modif
     - `yarn add helio-mod-jokes` or `npm install helio-mod-jokes`
     - `import JokesMod from 'helio-mod-jokes'`
     - `{ path: '/jokes', module: JokesMod }`
+
+</details>
 
 ## Deploying
 
