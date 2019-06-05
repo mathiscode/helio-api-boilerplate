@@ -1,4 +1,4 @@
-<!-- markdownlint-disable MD006 MD009 -->
+<!-- markdownlint-disable MD006 MD009 MD033 -->
 
 # ![Helio API Boilerplate](.github/logo.png) <!-- omit in toc -->
 
@@ -51,6 +51,10 @@ yarn start # for production; or npm start
 ```
 
 ## Importing as a module
+
+<detail>
+
+<summary>Click to expand</summary>
 
 ```sh
 yarn add helio-api-boilerplate helio-mod-users
@@ -116,6 +120,8 @@ On the `server` object, you can access the following properties and methods:
 ### Methods
 
   - `listen()`: start Helio listening for requests - **only useful if using noListen**
+
+</detail>
 
 ## Mods
 
