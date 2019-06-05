@@ -52,7 +52,7 @@ yarn start # for production; or npm start
 
 ## Importing as a module
 
-<detail>
+<details>
 
 <summary>Click to expand</summary>
 
@@ -121,7 +121,7 @@ On the `server` object, you can access the following properties and methods:
 
   - `listen()`: start Helio listening for requests - **only useful if using noListen**
 
-</detail>
+</details>
 
 ## Mods
 
