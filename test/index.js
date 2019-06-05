@@ -10,8 +10,6 @@ chai.should()
 
 const { app } = new Helio()
 
-// app.initializeServer()
-
 describe('Helio', () => {
   describe('GET /', () => {
     it('should get 200', done => {

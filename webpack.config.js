@@ -1,6 +1,7 @@
 const path = require('path')
 const nodeExternals = require('webpack-node-externals')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
+const CopyPlugin = require('copy-webpack-plugin')
 
 module.exports = {
   target: 'node',
@@ -8,15 +9,20 @@ module.exports = {
   externals: [nodeExternals()],
 
   entry: {
-    app: './src/index.js'
+    index: './src/index.js'
   },
 
   output: {
-    filename: 'index.js',
+    filename: '[name].js',
+    library: 'Helio',
+    libraryTarget: 'umd',
     path: path.resolve(__dirname, 'dist')
   },
 
   plugins: [
-    new CleanWebpackPlugin()
+    new CleanWebpackPlugin(),
+    new CopyPlugin([
+      { from: 'src/server.js', to: 'server.js' }
+    ])
   ]
 }

@@ -15,9 +15,11 @@ let PublicPaths = [
   ...(process.env.PUBLIC_PATHS ? process.env.PUBLIC_PATHS.split(',') : [])
 ]
 
-export default class {
-  constructor (options) {
+class Helio {
+  constructor (options, middleware = []) {
     options = this.options = options || {}
+    options.middleware = typeof options.middleware === 'function' ? [options.middleware] : options.middleware
+    options.middleware = Array.isArray(options.middleware) ? options.middleware : []
 
     this.mods = options.mods || Mods
     this.models = options.models || ModModels
@@ -28,21 +30,21 @@ export default class {
     this.routes = []
 
     const app = this.app = express()
-    app.set('HELIO_DB_URI', options.mongoose ? null : options.dbUri || process.env.DB_URI)
-    app.set('HELIO_MONGOOSE', options.mongoose)
+    app.set('HELIO_DB_URI', options.dbUri || process.env.DB_URI)
     app.set('HELIO_JWT_SECRET', options.jwtSecret || process.env.JWT_SECRET)
+    app.set('HELIO_JWT_TIMEOUT', options.jwtTimeout || process.env.JWT_TIMEOUT || '1h')
     app.set('HELIO_LOG_TO_DB', options.logToDB || process.env.LOG_TO_DB === 'true')
     app.set('HELIO_CONSOLE_LOG', options.consoleLog || process.env.CONSOLE_LOG === 'true')
     app.set('HELIO_CONSOLE_ERRORS', options.consoleErrors || process.env.CONSOLE_ERRORS === 'true')
 
-    // Setup and connect to database; server will not run until connected
     mongoose.set('useNewUrlParser', true)
     mongoose.set('useFindAndModify', false)
     mongoose.set('useCreateIndex', true)
+    mongoose.set('debug', options.mongooseDebug || false)
 
     let initError = false
 
-    if (!app.get('HELIO_DB_URI') && !app.get('HELIO_MONGOOSE')) initError = 'You must pass dbUri option or have DB_URI environment variable'
+    if (!app.get('HELIO_DB_URI')) initError = 'You must pass dbUri option or have DB_URI environment variable'
     if (!app.get('HELIO_JWT_SECRET')) initError = 'You must pass jwtSecret option or have JWT_SECRET environment variable'
 
     if (initError) throw new Error(initError)
@@ -50,11 +52,11 @@ export default class {
     // Setup logger
     const LogTransports = options.logTransports || []
 
-    if (process.env.NODE_ENV !== 'testing' && app.get('HELIO_LOG_TO_DB')) LogTransports.push(new MongoDB({ db: app.get('HELIO_DB_URI') || app.get('HELIO_MONGOOSE') }))
+    if (process.env.NODE_ENV !== 'testing' && app.get('HELIO_LOG_TO_DB')) LogTransports.push(new MongoDB({ db: app.get('HELIO_DB_URI') }))
 
     LogTransports.push(new winston.transports.Console({
       format: winston.format.simple(),
-      silent: process.env.NODE_ENV === 'testing' || process.env.CONSOLE_LOG === 'false'
+      silent: process.env.NODE_ENV === 'testing' || !app.get('HELIO_CONSOLE_LOG')
     }))
 
     this.log = winston.createLogger({
@@ -62,23 +64,24 @@ export default class {
       transports: LogTransports
     })
 
-    this.initializeServer(options)
+    this.connectDB()
+    this.initializeServer()
   }
 
   connectDB () {
-    if (this.app.get('HELIO_MONGOOSE')) return
-
     this.log.info('Connecting to database...')
-    mongoose.connect(process.env.DB_URI, (err) => {
+    mongoose.connect(this.app.get('HELIO_DB_URI'), err => {
       if (err) {
         this.log.error(err.toString())
-        throw new Error(err)
+        throw err
       }
     })
   }
 
-  initializeServer (options) {
+  initializeServer () {
     const app = this.app
+    const options = this.options
+
     app.disable('x-powered-by')
     app.use(bodyParser.json())
 
@@ -100,6 +103,9 @@ export default class {
       next()
     })
 
+    // Setup any middleware that was passed in
+    options.middleware.forEach(mid => app.use(mid))
+
     // Setup mods public paths
     this.mods.forEach(mod => {
       const Mod = mod.module
@@ -115,8 +121,8 @@ export default class {
       return done(null, !inWhitelist)
     }
 
-    app.use(jwt({ secret: process.env.JWT_SECRET, credentialsRequired: false })) // decode token even on public paths
-    app.use(jwt({ secret: process.env.JWT_SECRET, isRevoked: checkTokenRevocation }).unless({ path: PublicPaths })) // protect private paths
+    app.use(jwt({ secret: app.get('HELIO_JWT_SECRET'), credentialsRequired: false })) // decode token even on public paths
+    app.use(jwt({ secret: app.get('HELIO_JWT_SECRET'), isRevoked: checkTokenRevocation }).unless({ path: PublicPaths })) // protect private paths
 
     // Setup mod routes
     this.mods.forEach(mod => {
@@ -129,7 +135,7 @@ export default class {
       }
 
       app.use(mod.path, instance.router)
-      this.log.debug(`[MOD REGISTERED] ${instance.name}`)
+      this.log.info(`[MOD REGISTERED] ${instance.name}`)
     })
 
     // Root handler
@@ -156,12 +162,16 @@ export default class {
       return res.status(500).json({ error: 'Internal API error' })
     })
 
-    if (!this.options.noListen) this.listen(this.options)
+    if (!this.options.noListen) this.listen()
   }
 
-  listen (options) {
+  listen () {
     // Start listening for requests
-    this.app.listen(options.port || process.env.PORT || 3001)
-    this.log.info(`${process.env.NAME || 'Helio API Server'} listening`)
+    const options = this.options
+    const port = options.port || process.env.PORT || 3001
+    this.app.listen(port)
+    this.log.info(`${options.name || process.env.NAME || 'Helio API Server'} listening on port ${port}`)
   }
 }
+
+export default Helio
