@@ -1,4 +1,4 @@
-<!-- markdownlint-disable MD006 MD009 -->
+<!-- markdownlint-disable MD006 MD009 MD012 MD033 -->
 
 # ![Helio API Boilerplate](.github/logo.png) <!-- omit in toc -->
 
@@ -22,7 +22,10 @@ Helio is an easily extensible backend utilizing Express.js, Mongoose, JWT, and U
 
 ---
 
-- [Get Started](#get-started)
+- [Using as a boilerplate](#using-as-a-boilerplate)
+- [Importing as a module](#importing-as-a-module)
+  - [Properties](#properties)
+  - [Methods](#methods)
 - [Mods](#mods)
   - [Using packaged mods](#using-packaged-mods)
   - [Creating custom mods](#creating-custom-mods)
@@ -34,7 +37,7 @@ Helio is an easily extensible backend utilizing Express.js, Mongoose, JWT, and U
 
 ---
 
-## Get Started
+## Using as a boilerplate
 
 You probably want to [fork this repository](https://github.com/mathiscode/helio-api-boilerplate/fork) first, rename the repo to suit your needs, then replace the clone URL below. 
 
@@ -47,7 +50,84 @@ yarn server # for development; or npm run server
 yarn start # for production; or npm start
 ```
 
+## Importing as a module
+
+<details open>
+<summary><strong>Click to collapse/expand</strong></summary>
+
+
+```sh
+yarn add helio-api-boilerplate helio-mod-users
+```
+
+```js
+import Helio from 'helio-api-boilerplate'
+import UsersMod from 'helio-mod-users'
+import UsersModel from 'helio-api-boilerplate/models/User'
+import TokenWhitelist from 'helio-api-boilerplate/models/TokenWhitelist'
+
+const server = new Helio({
+  // DB URI of a MongoDB instance
+  dbUri: 'mongodb+srv://USER:PASS@HOST/myapp?retryWrites=true', // required
+  // Random string used to sign JWT tokens
+  jwtSecret: 'supersecret123!', // required
+  // Port number for the server
+  port: process.env.PORT || 3001,
+  // Prevent automatically listening on port 
+  noListen: false,
+  // Log to DB
+  logToDB: false,
+  // Operational log output to console
+  consoleLog: true,
+  // Errors output to console
+  consoleErrors: true,
+  // Verbose output from mongoose operations
+  mongooseDebug: false,
+
+  // Mods that will be loaded
+  // Do not include this option if you want to use the default mods
+  //  (Users, Blog, Jokes, Example)
+  mods: [
+    { path: '/user', module: UsersMod }
+  ],
+
+  // Models that will be provided to mods
+  // Do not include this option if you want to use the default models
+  //  (Users, BlogPost, TokenWhitelist)
+  models: [
+    { name: 'Users', model: UsersModel },
+    { name: 'TokenWhitelist', model: TokenWhitelistModel }
+  ],
+
+  // Custom middleware that will run before mods
+  // May be simple functions (req, res, next) or Express modules
+  middleware: [
+    (req, res, next) => {
+      console.log('Hello from custom middleware')
+      return next()
+    }
+  ]
+})
+```
+
+On the `server` object, you can access the following properties and methods:
+
+### Properties
+
+  - `app`: the Express app object
+  - `options`: the options that were used to create the Helio server
+
+### Methods
+
+  - `listen()`: start Helio listening for requests - **only useful if using noListen**
+
+</details>
+
 ## Mods
+
+<details open>
+<summary><strong>Click to collapse/expand</strong></summary>
+
 
 Helio Mods are the easiest way to extend Helio and they remove the need to modify core routes.
 
@@ -86,6 +166,8 @@ Helio Mods are the easiest way to extend Helio and they remove the need to modif
     - `yarn add helio-mod-jokes` or `npm install helio-mod-jokes`
     - `import JokesMod from 'helio-mod-jokes'`
     - `{ path: '/jokes', module: JokesMod }`
+
+</details>
 
 ## Deploying
 
