@@ -55,6 +55,7 @@ yarn start # for production; or npm start
 <details open>
 <summary><strong>Click to collapse/expand</strong></summary>
 
+
 ```sh
 yarn add helio-api-boilerplate helio-mod-users
 ```
@@ -126,6 +127,7 @@ On the `server` object, you can access the following properties and methods:
 
 <details open>
 <summary><strong>Click to collapse/expand</strong></summary>
+
 
 Helio Mods are the easiest way to extend Helio and they remove the need to modify core routes.
 
