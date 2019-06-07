@@ -39,7 +39,7 @@ Helio is an easily extensible backend utilizing Express.js, Mongoose, JWT, and U
 
 ## Using as a boilerplate
 
-You probably want to [fork this repository](https://github.com/mathiscode/helio-api-boilerplate/fork) first, rename the repo to suit your needs, then replace the clone URL below. 
+You probably want to [use this repository as a template](https://help.github.com/en/articles/creating-a-repository-from-a-template), then replace the clone URL below.
 
 ```sh
 git clone https://github.com/mathiscode/helio-api-boilerplate.git
