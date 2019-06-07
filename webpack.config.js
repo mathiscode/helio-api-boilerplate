@@ -22,7 +22,7 @@ module.exports = {
   plugins: [
     new CleanWebpackPlugin(),
     new CopyPlugin([
-      { from: 'src/server.js', to: 'server.js' }
+      { from: 'src/bin/server', to: 'bin' }
     ])
   ]
 }
