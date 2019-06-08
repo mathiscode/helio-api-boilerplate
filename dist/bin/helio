@@ -13,6 +13,7 @@ const collect = (value, previous) => previous.concat([value])
 program
   .option('--dbUri <dbUri>', 'MongoDB Connection URI')
   .option('--jwtSecret <jwtSecret>', 'Random string to sign JWT tokens')
+  .option('--jwtTimeout <jwtTimeout>', 'Time until tokens expire (eg. 1h)')
   .option('--no-consoleLog', 'Disable outputting operational log to console')
   .option('--no-consoleErrors', 'Disable outputting errors to console')
   .option('--logToDB', 'Enable logging to database')
@@ -55,11 +56,21 @@ try {
     })
   }
 
-  const { consoleLog, consoleErrors, logToDB, listen, port } = program
+  const {
+    dbUri,
+    jwtSecret,
+    jwtTimeout,
+    consoleLog,
+    consoleErrors,
+    logToDB,
+    listen,
+    port
+  } = program
 
   helio = new Helio({
-    dbUri: program.dbUri || process.env.DB_URI,
-    jwtSecret: program.jwtSecret || process.env.JWT_SECRET,
+    dbUri,
+    jwtSecret,
+    jwtTimeout,
     consoleLog,
     consoleErrors,
     logToDB,
