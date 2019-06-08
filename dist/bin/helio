@@ -1,5 +1,6 @@
 #! /usr/bin/env node
 require('dotenv').config()
+if (!process.env.NODE_ENV) process.env.NODE_ENV = 'production'
 
 const path = require('path')
 const program = require('commander')
