@@ -1,6 +1,6 @@
 {
   "name": "helio-api-boilerplate",
-  "version": "0.5.2",
+  "version": "0.5.3",
   "description": "Extensible backend boilerplate utilizing Express.js, Mongoose, JWT, and User registration/authentication",
   "main": "dist/index.js",
   "bin": {
