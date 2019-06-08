@@ -23,6 +23,11 @@ Helio is an easily extensible backend utilizing Express.js, Mongoose, JWT, and U
 ---
 
 - [Using as a boilerplate](#using-as-a-boilerplate)
+- [Using from the command line](#using-from-the-command-line)
+  - [Without installing](#without-installing)
+  - [Installing globally](#installing-globally)
+  - [Installing locally](#installing-locally)
+  - [Specifying mods and models from the CLI](#specifying-mods-and-models-from-the-cli)
 - [Importing as a module](#importing-as-a-module)
   - [Properties](#properties)
   - [Methods](#methods)
@@ -49,6 +54,54 @@ yarn # to install dependencies; or npm install
 yarn server # for development; or npm run server
 yarn start # for production; or npm start
 ```
+
+## Using from the command line
+
+<details open>
+<summary><strong>Click to collapse/expand</strong></summary>
+
+Arguments that you don't pass to the CLI will use env variables or defaults.
+
+### Without installing
+
+```sh
+npx helio-api-boilerplate --help
+```
+
+### Installing globally
+
+```sh
+yarn global add helio-api-boilerplate # or npm install -g helio-api-boilerplate
+helio --help
+```
+
+### Installing locally
+
+```sh
+yarn add helio-api-boilerplate # or npm install helio-api-boilerplate
+npx helio --help
+```
+
+### Specifying mods and models from the CLI
+
+You can override the default mods and models with the `--mods` and `--models` arguments.
+
+- Mod Syntax: `modRootPath:pathOrModule`
+- Model Syntax: `modelName:pathOrModule`
+
+If you want to use one of Helio's default models (eg. User, BlogPost, or TokenWhitelist), use the `Helio:ModelName` syntax.
+
+Examples:
+
+```sh
+helio --mod /user:helio-mod-users --model Helio:User --model Helio:TokenWhitelist
+```
+
+```sh
+helio --mod /myMod:/path/to/myMod --model MyModel:/path/to/MyModel
+```
+
+</details>
 
 ## Importing as a module
 
