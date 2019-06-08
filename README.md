@@ -44,6 +44,9 @@ Helio is an easily extensible backend utilizing Express.js, Mongoose, JWT, and U
 
 ## Using as a boilerplate
 
+<details open>
+<summary><strong>Click to collapse/expand</strong></summary>
+
 You probably want to [use this repository as a template](https://help.github.com/en/articles/creating-a-repository-from-a-template), then replace the clone URL below.
 
 ```sh
@@ -54,6 +57,8 @@ yarn # to install dependencies; or npm install
 yarn server # for development; or npm run server
 yarn start # for production; or npm start
 ```
+
+</details>
 
 ## Using from the command line
 
@@ -226,6 +231,9 @@ Helio Mods are the easiest way to extend Helio and they remove the need to modif
 
 ## Deploying
 
+<details open>
+<summary><strong>Click to collapse/expand</strong></summary>
+
 ### Heroku
 
 1. `heroku git:remote -a your-app-name`
@@ -235,7 +243,12 @@ Helio Mods are the easiest way to extend Helio and they remove the need to modif
 5. `heroku config:push -f .env.heroku -a your-app-name`
 6. `git push heroku master`
 
+</details>
+
 ## Testing
+
+<details open>
+<summary><strong>Click to collapse/expand</strong></summary>
 
 The normal testing process is handled with `yarn test`, which does the following:
 
@@ -247,6 +260,8 @@ If you don't want to enforce the standard code style, just remove `standard &&` 
 The more comprehensive testing during development happens with [Postman](https://www.getpostman.com/) collections and [newman](https://www.npmjs.com/package/newman). More documentation about that will come soon.
 
 For now, if you're interested in using it, collections are found in [test/postman/collections](test/postman/collections) and while the development server is running (with `yarn server`), run `yarn test:mods`
+
+</details>
 
 ## I don't like how Helio does [X]
 
