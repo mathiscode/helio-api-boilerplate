@@ -1,4 +1,4 @@
-#!/usr/bin/env node
+#! /usr/bin/env node
 
 // Start a Helio server with default options and .env configured
 const Helio = require('../index').default
