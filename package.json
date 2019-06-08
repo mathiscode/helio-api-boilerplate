@@ -4,12 +4,12 @@
   "description": "Extensible backend boilerplate utilizing Express.js, Mongoose, JWT, and User registration/authentication",
   "main": "dist/index.js",
   "bin": {
-    "helio": "./dist/bin/server"
+    "helio": "./dist/bin/helio"
   },
   "scripts": {
     "start": "npm run server:prod",
-    "server": "cross-env NODE_ENVIRONMENT=development nodemon --exec babel-node --require node_modules/dotenv/config src/bin/server",
-    "server:prod": "node -r dotenv/config dist/bin/server",
+    "server": "cross-env NODE_ENVIRONMENT=development nodemon --exec babel-node --require node_modules/dotenv/config src/bin/helio",
+    "server:prod": "cross-env NODE_ENVIRONMENT=production node dist/bin/helio",
     "clean": "rimraf dist",
     "transpile": "webpack",
     "build": "cross-env NODE_ENV=production npm-run-all clean transpile build:models",

@@ -16,11 +16,8 @@ program
   .option('--port <port>', 'Port number to listen on', parseInt)
   .option('--no-listen', 'Prevent automatically listening on port')
   .option('--mongooseDebug', 'Enable mongoose debug logging')
-
   .option('--mods <mods>', 'List of mods to load; format: /users:helio-mod-users,/path:./mods/myMod.js ...')
   .option('--models <models>', 'List of models to provide to mods; format: Helio:User,modelName:./path/to/my/Model.js ...')
-  //middleware
-
   .parse(process.argv)
 
 let mods = null

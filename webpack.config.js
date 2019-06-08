@@ -22,7 +22,7 @@ module.exports = {
   plugins: [
     new CleanWebpackPlugin(),
     new CopyPlugin([
-      { from: 'src/bin/server', to: 'bin' }
+      { from: 'src/bin/helio', to: 'bin' }
     ])
   ]
 }
