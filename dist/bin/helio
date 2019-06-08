@@ -1,5 +1,5 @@
 #! /usr/bin/env node
-require('dotenv').config()
+// require('dotenv').config()
 if (!process.env.NODE_ENV) process.env.NODE_ENV = 'production'
 
 const path = require('path')
@@ -51,14 +51,23 @@ if (ModelSource) {
 
 const { consoleLog, consoleErrors, logToDB, listen, port } = program
 
-module.exports = new Helio({
-  dbUri: program.dbUri || process.env.DB_URI,
-  jwtSecret: program.jwtSecret || process.env.JWT_SECRET,
-  consoleLog,
-  consoleErrors,
-  logToDB,
-  port,
-  noListen: !listen,
-  mods,
-  models
-})
+let helio
+
+try {
+  helio = new Helio({
+    dbUri: program.dbUri || process.env.DB_URI,
+    jwtSecret: program.jwtSecret || process.env.JWT_SECRET,
+    consoleLog,
+    consoleErrors,
+    logToDB,
+    port,
+    noListen: !listen,
+    mods,
+    models
+  })
+} catch (err) {
+  process.env.NODE_ENV === 'production' ? console.error(err.toString()) : console.error(err)
+  process.exit(1)
+}
+
+module.exports = helio
