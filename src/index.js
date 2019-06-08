@@ -8,7 +8,17 @@ import rateLimit from 'express-rate-limit'
 import { MongoDB } from 'winston-mongodb'
 
 import { Mods, ModModels } from './config'
+
+// Import default models
+import UserModel from './models/User'
+import BlogPostModel from './models/BlogPost'
 import TokenWhitelist from './models/TokenWhitelist'
+
+export const DefaultModels = [
+  { name: 'User', model: UserModel },
+  { name: 'BlogPost', model: BlogPostModel },
+  { name: 'TokenWhitelist', model: TokenWhitelist }
+]
 
 let PublicPaths = [
   '/',
@@ -16,7 +26,7 @@ let PublicPaths = [
 ]
 
 class Helio {
-  constructor (options, middleware = []) {
+  constructor (options) {
     options = this.options = options || {}
     options.middleware = typeof options.middleware === 'function' ? [options.middleware] : options.middleware
     options.middleware = Array.isArray(options.middleware) ? options.middleware : []

@@ -1,5 +1,66 @@
 #! /usr/bin/env node
+require('dotenv').config()
 
-// Start a Helio server with default options and .env configured
-const Helio = require('../index').default
-new Helio() // eslint-disable-line
+const path = require('path')
+const program = require('commander')
+
+const Helio = require('../../dist/index').default
+const DefaultModels = require('../../dist/index').DefaultModels
+
+program
+  .option('--dbUri <dbUri>', 'MongoDB Connection URI')
+  .option('--jwtSecret <jwtSecret>', 'Random string to sign JWT tokens')
+  .option('--no-consoleLog', 'Disable outputting operational log to console')
+  .option('--no-consoleErrors', 'Disable outputting errors to console')
+  .option('--logToDB', 'Enable logging to database')
+  .option('--port <port>', 'Port number to listen on', parseInt)
+  .option('--no-listen', 'Prevent automatically listening on port')
+  .option('--mongooseDebug', 'Enable mongoose debug logging')
+
+  .option('--mods <mods>', 'List of mods to load; format: /users:helio-mod-users,/path:./mods/myMod.js ...')
+  .option('--models <models>', 'List of models to provide to mods; format: Helio:User,modelName:./path/to/my/Model.js ...')
+  //middleware
+
+  .parse(process.argv)
+
+let mods = null
+const ModSource = program.mods || process.env.MODS
+
+if (ModSource) {
+  mods = ModSource.split(',').map(data => {
+    const [ modPath, modModule ] = data.split(/:(.+)/)
+    return { path: modPath, module: require(modModule).default }
+  })
+}
+
+let models = null
+const ModelSource = program.models || process.env.MODELS
+
+if (ModelSource) {
+  models = ModelSource.split(',').map(data => {
+    let [ modelName, modelModule ] = data.split(/:(.+)/)
+
+    if (modelName === 'Helio') {
+      const model = DefaultModels.find(m => m.name === modelModule)
+      if (!model) throw new Error(`${modelName}:${modelModule} is not a valid model`)
+      return { name: model.name, model: model.model }
+    }
+
+    const modelModulePath = (['.', '/'].includes(modelModule[0])) ? path.join(process.cwd(), modelModule) : modelModule
+    return { name: modelName, model: require(modelModulePath).default }
+  })
+}
+
+const { consoleLog, consoleErrors, logToDB, listen, port } = program
+
+module.exports = new Helio({
+  dbUri: program.dbUri || process.env.DB_URI,
+  jwtSecret: program.jwtSecret || process.env.JWT_SECRET,
+  consoleLog,
+  consoleErrors,
+  logToDB,
+  port,
+  noListen: !listen,
+  mods,
+  models
+})

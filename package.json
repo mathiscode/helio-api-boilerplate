@@ -3,14 +3,17 @@
   "version": "0.4.0",
   "description": "Extensible backend boilerplate utilizing Express.js, Mongoose, JWT, and User registration/authentication",
   "main": "dist/index.js",
-  "bin": { "helio": "./dist/bin/server" },
+  "bin": {
+    "helio": "./dist/bin/server"
+  },
   "scripts": {
     "start": "npm run server:prod",
     "server": "cross-env NODE_ENVIRONMENT=development nodemon --exec babel-node --require node_modules/dotenv/config src/bin/server",
     "server:prod": "node -r dotenv/config dist/bin/server",
     "clean": "rimraf dist",
     "transpile": "webpack",
-    "build": "cross-env NODE_ENV=production npm-run-all clean transpile",
+    "build": "cross-env NODE_ENV=production npm-run-all clean transpile build:models",
+    "build:models": "babel src/models --out-dir dist/models",
     "test": "standard && cross-env NODE_ENV=testing PORT=0 mocha --require @babel/register --require dotenv/config --exit",
     "test:mods": "npm-run-all test:mods:users test:mods:blog",
     "test:mods:users": "newman run -e test/postman/postman_environment.json test/postman/collections/UsersMod.json",
@@ -42,6 +45,7 @@
     "@babel/polyfill": "^7.4.4",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
+    "commander": "^2.20.0",
     "cross-env": "^5.2.0",
     "dotenv": "^7.0.0",
     "express": "^4.16.4",
