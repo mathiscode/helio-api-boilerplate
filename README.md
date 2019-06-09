@@ -90,9 +90,9 @@ Most of the examples are using ES6 imports, so if you're not using Helio as a bo
 
 ### A bit about mods and models <!-- omit in toc -->
 
-Mods are nothing more than objects with an Express router and some sugar. 
+Mods are nothing more than objects with an [Express](https://expressjs.com/) router and some sugar. 
 
-Models are just normal Mongoose models.
+Models are just normal [Mongoose](https://mongoosejs.com/) models.
 
 The mods will handle routes under a given /path. Models are not loaded directly by mods, but provided by Helio when the mod is instantiated with the `needModels` property, which is an array of models to be loaded when the mod is instantiated. The mod can then use its own schemas to extend the models provided by Helio.
 
