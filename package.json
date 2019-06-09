@@ -2,6 +2,10 @@
   "name": "helio-api-boilerplate",
   "version": "0.5.7",
   "description": "Extensible backend boilerplate utilizing Express.js, Mongoose, JWT, and User registration/authentication",
+  "author": "J.R. Mathis",
+  "license": "MIT",
+  "homepage": "https://github.com/mathiscode/helio-api-boilerplate#readme",
+  "keywords": ["nodejs", "express", "jwt", "mongoose", "mongodb", "boilerplate", "api-server"],
   "main": "dist/index.js",
   "bin": {
     "helio": "./dist/bin/helio"
@@ -30,13 +34,9 @@
     "type": "git",
     "url": "git+https://github.com/mathiscode/helio-api-boilerplate.git"
   },
-  "author": "J.R. Mathis",
-  "license": "MIT",
   "bugs": {
     "url": "https://github.com/mathiscode/helio-api-boilerplate/issues"
   },
-  "homepage": "https://github.com/mathiscode/helio-api-boilerplate#readme",
-  "keywords": ["nodejs", "express", "jwt", "mongoose", "mongodb", "boilerplate", "api-server"],
   "standard": {
     "ignore": [
       "/dist"
