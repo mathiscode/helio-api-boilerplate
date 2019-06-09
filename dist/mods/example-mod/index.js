@@ -24,6 +24,7 @@ function () {
   function _default(options) {
     _classCallCheck(this, _default);
 
+    this.options = options;
     this.name = options.name || 'Example Helio Mod';
 
     var router = this.router = _express["default"].Router(); // Comment the next line out if you don't want any public paths, or modify as needed

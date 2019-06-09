@@ -33,6 +33,7 @@ function () {
   function _default(options) {
     _classCallCheck(this, _default);
 
+    this.options = options;
     this.name = options.name || 'Helio Blog Mod';
 
     var router = this.router = _express["default"].Router();

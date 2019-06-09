@@ -9,6 +9,7 @@ import { v4 as uuid } from 'uuid'
 
 export default class {
   constructor (options) {
+    this.options = options
     this.name = options.name || 'Helio Blog Mod'
     const router = this.router = express.Router()
 

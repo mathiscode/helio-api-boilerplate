@@ -7,6 +7,7 @@ import mongoose from 'mongoose' // Only necessary if you need to extend inbound 
 
 export default class {
   constructor (options) {
+    this.options = options
     this.name = options.name || 'Example Helio Mod'
     const router = this.router = express.Router()
 
