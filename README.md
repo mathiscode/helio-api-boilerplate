@@ -136,7 +136,7 @@ npx helio --help
 
 ### Specifying mods and models from the CLI
 
-You can override the default mods and models with the `--mods` and `--models` arguments.
+You can override the default mods and models with the `--mod` and `--model` arguments.
 
 - Mod Syntax: `modRootPath:pathOrModule`
 - Model Syntax: `modelName:pathOrModule`
