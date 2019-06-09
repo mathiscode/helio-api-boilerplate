@@ -14,9 +14,11 @@ Helio is an easily extensible backend utilizing Express.js, Mongoose, JWT, and U
 [![Dependency Status](https://img.shields.io/david/mathiscode/helio-api-boilerplate.svg)](https://david-dm.org/mathiscode/helio-api-boilerplate)
 [![Last Commit](https://img.shields.io/github/last-commit/mathiscode/helio-api-boilerplate.svg)](https://github.com/mathiscode/helio-api-boilerplate/commit/master)
 [![GitHub issues](https://img.shields.io/github/issues/mathiscode/helio-api-boilerplate.svg)](https://github.com/mathiscode/helio-api-boilerplate/issues)
+
 [![Standardjs](https://img.shields.io/badge/code_style-standard-blue.svg)](https://standardjs.com)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-blue.svg)](https://github.com/mathiscode/helio-api-boilerplate/compare)
 [![Hire Me](https://img.shields.io/badge/Hire%20Me-Please!-blue.svg)](https://www.linkedin.com/in/jrmathis/)
+[![Gitter](https://img.shields.io/gitter/room/mathiscode/helio-api-boilerplate.svg)](https://gitter.im/helio-api-boilerplate)
 [![Beerpay](https://beerpay.io/mathiscode/helio-api-boilerplate/badge.svg?style=beer-square)](https://beerpay.io/mathiscode/helio-api-boilerplate)  [![Beerpay](https://beerpay.io/mathiscode/helio-api-boilerplate/make-wish.svg?style=flat-square)](https://beerpay.io/mathiscode/helio-api-boilerplate?focus=wish)
 
 > “This is what I have learned, Malenfant. This is how it is, how it was, how it came to be.”
