@@ -2,6 +2,8 @@
 
 # ![Helio API Boilerplate](.github/logo.png) <!-- omit in toc -->
 
+[![Built with Science](https://forthebadge.com/images/badges/built-with-science.svg)](https://forthebadge.com)
+
 Helio is an easily extensible backend utilizing Express.js, Mongoose, JWT, and User registration/authentication.
 
 ---
