@@ -62,6 +62,12 @@ It's designed to be flexible, so you can create a new project in these ways:
 
 ## Important Notes
 
+Most of the examples are using ES6 imports, so if you're not using Helio as a boilerplate, you'll need to setup your babel/webpack build environment or replace the import statements with:
+
+`const Helio = require('helio-api-boilerplate').default`
+
+`const SomeMod = require(<package>).default`
+
 ### There are two required options, and these can be set with: <!-- omit in toc -->
 
 - Environment Variables
@@ -243,22 +249,35 @@ Helio Mods are the easiest way to extend Helio and they remove the need to modif
 ### Using packaged mods
 
 1. `yarn add <package>` or `npm install <package>` (eg. helio-mod-jokes)
-2. Modify [src/config.js](src/config.js):
-    - `import ModName from <package>` under the "Import mods" comment
-    - Add an object to the Mods array under the "Set mods to load" comment:
-      - `{ path: '/my-mod', module: ModName }`
+2. Boilerplate Method
+   - Modify [src/config.js](src/config.js):
+       - `import ModName from <package>` under the "Import mods" comment
+       - Add an object to the Mods array under the "Set mods to load" comment:
+         - `{ path: '/my-mod', module: ModName }`
+3. CLI Method
+   - `helio --mod /my-mod:<package>`
+4. Module Method
+   - `import ModName from <package>`
+   - `new Helio({ mods: [{ path: '/my-mod', module: ModName }] })`
 
 ### Creating custom mods
 
-1. Create a folder for your mod in `src/mods` and create an `index.js`
-2. For reference, see:
-      - [src/mods/example-mod/index.js](src/mods/example-mod/index.js) for a fully commented example that uses all available features
-      - [src/mods/minimal-mod/index.js](src/mods/minimal-mod/index.js) for a barebones starting point for a new mod
-      - [src/mods/blog-mod/index.js](src/mods/blog-mod/index.js) for a functional real-world example
-3. Modify [src/config.js](src/config.js):
+1. Boilerplate Method
+   - Create a folder for your mod in `src/mods` and create an `index.js`
+   - Modify [src/config.js](src/config.js):
       - `import MyMod from './mods/my-mod'` under the "Import mods" comment
       - Add an object to the Mods array under the "Set mods to load" comment:
         - `{ path: '/my-mod', module: MyMod }`
+2. CLI Method
+   - `helio --mod /my-mod:./path/to/my-mod`
+3. Module Method
+   - `import MyMod from './path/to/my-mod'`
+   - `new Helio({ mods: [{ path: '/my-mod', module: MyMod }] })`
+4. For reference, see:
+      - [src/mods/example-mod/index.js](src/mods/example-mod/index.js) for a fully commented example that uses all available features
+      - [src/mods/minimal-mod/index.js](src/mods/minimal-mod/index.js) for a barebones starting point for a new mod
+      - [src/mods/blog-mod/index.js](src/mods/blog-mod/index.js) for a functional real-world example
+
 
 ### Official Helio mods
 
