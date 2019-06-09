@@ -7,6 +7,8 @@ import winston from 'winston'
 import rateLimit from 'express-rate-limit'
 import { MongoDB } from 'winston-mongodb'
 
+import Package from '../package.json'
+
 import { Mods, ModModels } from './config'
 
 // Import default models
@@ -151,7 +153,8 @@ class Helio {
     // Root handler
     app.get('/', (req, res) => {
       res.json({
-        name: options.name || process.env.NAME || 'Helio API Server'
+        name: options.name || process.env.NAME || 'Helio API Server',
+        version: process.env.SHOW_VERSION ? Package.version : null
       })
     })
 
