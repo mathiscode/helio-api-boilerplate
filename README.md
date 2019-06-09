@@ -114,6 +114,8 @@ yarn server # for development; or npm run server
 yarn start # for production; or npm start
 ```
 
+You'll want to start by exploring [src/config.js](src/config.js) and [src/index.js](src/index.js).
+
 </details>
 
 ## Using from the command line
