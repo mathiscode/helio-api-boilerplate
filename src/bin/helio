@@ -8,9 +8,18 @@ const program = require('commander')
 const Helio = require('../../dist/index').default
 const DefaultModels = require('../../dist/index').DefaultModels
 
+let version = 'unknown'
+
+try {
+  version = require('../version.json')
+} catch (e) {
+  console.warn('Unable to find package version')
+}
+
 const collect = (value, previous) => previous.concat([value])
 
 program
+  .version(version, '-v, --version')
   .option('--dbUri <dbUri>', 'MongoDB Connection URI')
   .option('--jwtSecret <jwtSecret>', 'Random string to sign JWT tokens')
   .option('--jwtTimeout <jwtTimeout>', 'Time until tokens expire (eg. 1h)')

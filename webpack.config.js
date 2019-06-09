@@ -1,7 +1,10 @@
+const Package = require('./package.json')
+
 const path = require('path')
 const nodeExternals = require('webpack-node-externals')
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 const CopyPlugin = require('copy-webpack-plugin')
+const CreateFileWebpack = require('create-file-webpack')
 
 module.exports = {
   target: 'node',
@@ -21,8 +24,15 @@ module.exports = {
 
   plugins: [
     new CleanWebpackPlugin(),
+
     new CopyPlugin([
       { from: 'src/bin/helio', to: 'bin' }
-    ])
+    ]),
+
+    new CreateFileWebpack({
+      path: './dist',
+      fileName: 'version.json',
+      content: `"${Package.version}"`
+    })
   ]
 }
