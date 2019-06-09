@@ -174,8 +174,8 @@ yarn add helio-api-boilerplate helio-mod-users
 ```js
 import Helio from 'helio-api-boilerplate'
 import UsersMod from 'helio-mod-users'
-import UsersModel from 'helio-api-boilerplate/models/User'
-import TokenWhitelist from 'helio-api-boilerplate/models/TokenWhitelist'
+import UsersModel from 'helio-api-boilerplate/src/models/User'
+import TokenWhitelist from 'helio-api-boilerplate/src/models/TokenWhitelist'
 
 const server = new Helio({
   // DB URI of a MongoDB instance
