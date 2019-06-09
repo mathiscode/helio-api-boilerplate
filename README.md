@@ -91,7 +91,7 @@ Mods are nothing more than objects with an Express router and some sugar.
 
 Models are just normal Mongoose models.
 
-The mods will handle routes under a given /path. Models are not loaded directly by mods, but provided by Helio when the mod is instantiated with the `needModels` property, which is an array of models to be loaded when the mod is instantiated. The mod can then use its own schemas to extend the model provided by Helio.
+The mods will handle routes under a given /path. Models are not loaded directly by mods, but provided by Helio when the mod is instantiated with the `needModels` property, which is an array of models to be loaded when the mod is instantiated. The mod can then use its own schemas to extend the models provided by Helio.
 
 If that's confusing, just look at the [example-mod](src/mods/example-mod/index.js) and you'll see what's going on.
 
