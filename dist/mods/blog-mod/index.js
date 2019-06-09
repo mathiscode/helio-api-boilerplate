@@ -36,7 +36,7 @@ function () {
     this.options = options;
     this.name = options.name || 'Helio Blog Mod';
 
-    var router = this.router = _express["default"].Router();
+    var router = this.router = _express["default"].Router(options.routerOptions);
 
     this.needModels = ['BlogPost'];
     this.subSchemas = {

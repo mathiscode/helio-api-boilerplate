@@ -9,7 +9,7 @@ export default class {
   constructor (options) {
     this.options = options
     this.name = options.name || 'Example Minimal Helio Mod'
-    const router = this.router = express.Router()
+    const router = this.router = express.Router(options.routerOptions)
     this.publicPaths = [options.path]
 
     router.get('/', this.index.bind(this))

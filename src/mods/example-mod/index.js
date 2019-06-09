@@ -9,7 +9,7 @@ export default class {
   constructor (options) {
     this.options = options
     this.name = options.name || 'Example Helio Mod'
-    const router = this.router = express.Router()
+    const router = this.router = express.Router(options.routerOptions)
 
     // Comment the next line out if you don't want any public paths, or modify as needed
     this.publicPaths = [options.path, new RegExp(`^${options.path}/.*`)] // Everything is public

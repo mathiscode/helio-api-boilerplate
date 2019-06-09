@@ -27,7 +27,7 @@ function () {
     this.options = options;
     this.name = options.name || 'Example Helio Mod';
 
-    var router = this.router = _express["default"].Router(); // Comment the next line out if you don't want any public paths, or modify as needed
+    var router = this.router = _express["default"].Router(options.routerOptions); // Comment the next line out if you don't want any public paths, or modify as needed
 
 
     this.publicPaths = [options.path, new RegExp("^".concat(options.path, "/.*"))]; // Everything is public

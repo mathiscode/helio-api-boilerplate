@@ -24,7 +24,7 @@ function () {
     this.options = options;
     this.name = options.name || 'Example Minimal Helio Mod';
 
-    var router = this.router = _express["default"].Router();
+    var router = this.router = _express["default"].Router(options.routerOptions);
 
     this.publicPaths = [options.path];
     router.get('/', this.index.bind(this));
