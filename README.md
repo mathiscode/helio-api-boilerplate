@@ -14,14 +14,16 @@ Helio is an easily extensible backend utilizing Express.js, Mongoose, JWT, and U
 [![Hire Me](https://img.shields.io/badge/Hire%20Me-Please!-blue.svg)](https://www.linkedin.com/in/jrmathis/)
 [![Beerpay](https://beerpay.io/mathiscode/helio-api-boilerplate/badge.svg?style=beer-square)](https://beerpay.io/mathiscode/helio-api-boilerplate)  [![Beerpay](https://beerpay.io/mathiscode/helio-api-boilerplate/make-wish.svg?style=flat-square)](https://beerpay.io/mathiscode/helio-api-boilerplate?focus=wish)
 
-> “Space is for the cephalopods, Maura. It never was meant for us.”
-> 
-> *- Stephen Baxter, Manifold: Time* 
+> “This is what I have learned, Malenfant. This is how it is, how it was, how it came to be.”
+>  
+> *― Stephen Baxter, Manifold: Time*
 
 [![Tweet](https://img.shields.io/twitter/url/http/shields.io.svg?style=social)](https://twitter.com/intent/tweet?text=Check%20out%20Helio%20Boilerplate&url=https://github.com/mathiscode/helio-api-boilerplate&hashtags=nodejs,javascript,developers) *Help spread the word and share this project!*
 
 ---
 
+- [Overview](#overview)
+- [Important Notes](#important-notes)
 - [Using as a boilerplate](#using-as-a-boilerplate)
 - [Using from the command line](#using-from-the-command-line)
   - [Without installing](#without-installing)
@@ -39,8 +41,52 @@ Helio is an easily extensible backend utilizing Express.js, Mongoose, JWT, and U
   - [Heroku](#heroku)
 - [Testing](#testing)
 - [I don't like how Helio does [X]](#i-dont-like-how-helio-does-x)
+- [Is it perfect?](#is-it-perfect)
 
 ---
+
+## Overview
+
+Helio was created to address the scenario where you find yourself creating multiple projects that use Express.js/Mongoose and having to reinvent the wheel every time, implementing an authentication system, routers, etc.
+
+Using Helio, you can quickly build new projects with a ready-to-deploy server.
+
+It's designed to be flexible, so you can create a new project in these ways:
+
+- Using Helio as a boilerplate, where you hack at the code to build your project
+- Using Helio as a module
+  - You can import Helio into any project and create a new server in just a few lines of code without adopting the conventions of using it as a boilerplate
+- Using Helio as a CLI tool
+  - You can run `helio` from the command line to startup a new server
+
+## Important Notes
+
+### There are two required options, and these can be set with: <!-- omit in toc -->
+
+- Environment Variables
+  - `DB_URI=[your MongoDB Connection URI]`
+  - `JWT_SECRET=[a random string to sign user tokens]`
+- Module Options
+  - `new Helio({ dbUri: 'mongo-uri', jwtSecret: 'my-secret })`
+- CLI Options
+  - `helio --dbUri mongo-uri --jwtSecret my-secret`
+
+### By default, a server will load the following mods: <!-- omit in toc -->
+
+- `helio-mod-users`
+- `helio-mod-jokes`
+- `src/mods/example-mod`
+- `src/mods/blog-mod`
+
+### A bit about mods and models <!-- omit in toc -->
+
+Mods are nothing more than objects with an Express router and some sugar. 
+
+Models are just normal Mongoose models.
+
+The mods will handle routes under a given /path. Models are not loaded directly by mods, but provided by Helio when the mod is instantiated with the `needModels` property, which is an array of models to be loaded when the mod is instantiated. The mod can then use its own schemas to extend the model provided by Helio.
+
+If that's confusing, just look at the [example-mod](src/mods/example-mod/index.js) and you'll see what's going on.
 
 ## Using as a boilerplate
 
@@ -266,3 +312,7 @@ For now, if you're interested in using it, collections are found in [test/postma
 ## I don't like how Helio does [X]
 
 In essence, this is a ready-to-deploy Express server, so if you're comfortable with Express you can easily modify any part of it to fit your needs. Please feel free to gut the code and just keep what makes your life easier! 😁
+
+## Is it perfect?
+
+![Really?](https://media.tenor.com/images/e3e3e0ff7312168a1b657874f42d509e/tenor.gif)
