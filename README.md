@@ -6,6 +6,7 @@ Helio is an easily extensible backend utilizing Express.js, Mongoose, JWT, and U
 
 ---
 
+[![Version](https://img.shields.io/npm/v/helio-api-boilerplate.svg?color=blue)](https://www.npmjs.com/package/helio-api-boilerplate)
 [![GitHub license](https://img.shields.io/github/license/mathiscode/helio-api-boilerplate.svg)](https://github.com/mathiscode/helio-api-boilerplate/blob/master/LICENSE)
 [![Build Status](https://travis-ci.org/mathiscode/helio-api-boilerplate.svg?branch=master)](https://travis-ci.org/mathiscode/helio-api-boilerplate)
 [![GitHub issues](https://img.shields.io/github/issues/mathiscode/helio-api-boilerplate.svg)](https://github.com/mathiscode/helio-api-boilerplate/issues)
