@@ -94,7 +94,7 @@ If that's confusing, just look at the [example-mod](src/mods/example-mod/index.j
 <details open>
 <summary><strong>Click to collapse/expand</strong></summary>
 
-You probably want to [use this repository as a template](https://help.github.com/en/articles/creating-a-repository-from-a-template), then replace the clone URL below.
+You probably want to [use this repository as a template](https://help.github.com/en/articles/creating-a-repository-from-a-template), then replace the clone URL and directory name below.
 
 ```sh
 git clone https://github.com/mathiscode/helio-api-boilerplate.git
