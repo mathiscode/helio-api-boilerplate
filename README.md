@@ -53,11 +53,12 @@ Using Helio, you can quickly build new projects with a ready-to-deploy server.
 
 It's designed to be flexible, so you can create a new project in these ways:
 
-- Using Helio as a boilerplate, where you hack at the code to build your project
-- Using Helio as a module
-  - You can import Helio into any project and create a new server in just a few lines of code without adopting the conventions of using it as a boilerplate
-- Using Helio as a CLI tool
+- [Using Helio as a boilerplate](#using-as-a-boilerplate)
+  - Hack at the Helio code to build your project
+- [Using Helio as a CLI tool](#using-from-the-command-line)
   - You can run `helio` from the command line to startup a new server
+- [Using Helio as a module](#importing-as-a-module)
+  - You can import Helio into any project and create a new server in just a few lines of code without adopting the conventions of using it as a boilerplate
 
 ## Important Notes
 
