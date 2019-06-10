@@ -13,7 +13,8 @@ Helio is an easily extensible backend utilizing Express.js, Mongoose, JWT, and U
 [![Build Status](https://travis-ci.org/mathiscode/helio-api-boilerplate.svg?branch=master)](https://travis-ci.org/mathiscode/helio-api-boilerplate)
 [![Dependency Status](https://img.shields.io/david/mathiscode/helio-api-boilerplate.svg)](https://david-dm.org/mathiscode/helio-api-boilerplate)
 [![Last Commit](https://img.shields.io/github/last-commit/mathiscode/helio-api-boilerplate.svg)](https://github.com/mathiscode/helio-api-boilerplate/commit/master)
-[![GitHub issues](https://img.shields.io/github/issues/mathiscode/helio-api-boilerplate.svg)](https://github.com/mathiscode/helio-api-boilerplate/issues)
+[![Open issues](https://img.shields.io/github/issues/mathiscode/helio-api-boilerplate.svg)](https://github.com/mathiscode/helio-api-boilerplate/issues)
+[![Closed issues](https://img.shields.io/github/issues-closed/mathiscode/helio-api-boilerplate.svg)](https://github.com/mathiscode/helio-api-boilerplate/issues?q=is%3Aissue+is%3Aclosed)
 
 [![Standardjs](https://img.shields.io/badge/code_style-standard-blue.svg)](https://standardjs.com)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-blue.svg)](https://github.com/mathiscode/helio-api-boilerplate/compare)
