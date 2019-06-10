@@ -1,6 +1,8 @@
 <!-- markdownlint-disable MD006 MD009 MD012 MD026 MD033 -->
 
-# ![Helio API Boilerplate](.github/logo.png) <!-- omit in toc -->
+<center>
+  <img src='.github/logo-with-sub.png' alt='Helio API Boilerplate' />
+</center>
 
 [![Built with Science](https://forthebadge.com/images/badges/built-with-science.svg)](https://forthebadge.com)
 
