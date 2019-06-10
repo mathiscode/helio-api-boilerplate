@@ -1,10 +1,14 @@
 {
   "name": "helio-api-boilerplate",
-  "version": "0.6.4",
+  "version": "0.6.3",
   "description": "Extensible backend boilerplate utilizing Express.js, Mongoose, JWT, and User registration/authentication",
   "author": "J.R. Mathis (https://github.com/mathiscode)",
   "license": "MIT",
   "homepage": "https://github.com/mathiscode/helio-api-boilerplate#readme",
+  "main": "dist/index.js",
+  "bin": {
+    "helio": "./dist/bin/helio"
+  },
   "keywords": [
     "nodejs",
     "express",
@@ -14,10 +18,6 @@
     "boilerplate",
     "api-server"
   ],
-  "main": "dist/index.js",
-  "bin": {
-    "helio": "./dist/bin/helio"
-  },
   "scripts": {
     "start": "npm run server:prod",
     "server": "cross-env NODE_ENVIRONMENT=development nodemon --exec babel-node --require node_modules/dotenv/config src/bin/helio",
@@ -25,10 +25,10 @@
     "webpack": "webpack",
     "build": "cross-env NODE_ENV=production npm-run-all webpack build:mods",
     "build:mods": "babel src/mods --out-dir dist/mods",
-    "version:patch": "npm version patch && npm run publish",
-    "version:minor": "npm version minor && npm run publish",
-    "version:major": "npm version major && npm run publish",
-    "publish": "git push && npm publish",
+    "version:patch": "npm version patch && npm run push",
+    "version:minor": "npm version minor && npm run push",
+    "version:major": "npm version major && npm run push",
+    "push": "git push && npm publish",
     "test": "standard && cross-env NODE_ENV=testing PORT=0 mocha --require @babel/register --require dotenv/config --exit",
     "test:mods": "npm-run-all test:mods:users test:mods:blog",
     "test:mods:users": "newman run -e test/postman/postman_environment.json test/postman/collections/UsersMod.json",
