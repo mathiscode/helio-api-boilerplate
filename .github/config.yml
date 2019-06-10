@@ -1,0 +1,9 @@
+newIssueWelcomeComment: >
+  🤖 Thanks for opening your first issue! 🤖
+
+  Hang tight and someone should address it soon!
+
+newPRWelcomeComment: |
+  🤖 Thanks for opening a pull request! 🤖
+
+  While you're waiting to get merged, push more fixes to this PR if you want!
