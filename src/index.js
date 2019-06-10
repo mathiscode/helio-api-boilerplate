@@ -178,11 +178,14 @@ class Helio {
     if (!options.noListen) this.listen()
   }
 
-  listen () {
+  listen (callback) {
     // Start listening for requests
     const port = this.options.port || process.env.PORT || 3001
-    this.app.listen(port)
-    this.log.info(`${this.options.name || process.env.NAME || 'Helio API Server'} listening on port ${port}`)
+    const listener = this.app.listen(port, () => {
+      this.port = listener.address().port
+      this.log.info(`${this.options.name || process.env.NAME || 'Helio API Server'} listening on port ${this.port}`)
+      if (typeof callback === 'function') callback(listener)
+    })
   }
 }
 
