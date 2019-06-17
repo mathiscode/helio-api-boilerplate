@@ -8,8 +8,6 @@ Helio is an easily extensible backend utilizing Express.js, Mongoose, JWT, and U
 
 ---
 
-[![Version](https://img.shields.io/npm/v/helio-api-boilerplate.svg?color=green)](https://www.npmjs.com/package/helio-api-boilerplate)
-[![GitHub license](https://img.shields.io/github/license/mathiscode/helio-api-boilerplate.svg?color=green)](https://github.com/mathiscode/helio-api-boilerplate/blob/master/LICENSE)
 [![Build Status](https://travis-ci.org/mathiscode/helio-api-boilerplate.svg?branch=master)](https://travis-ci.org/mathiscode/helio-api-boilerplate)
 [![Dependency Status](https://img.shields.io/david/mathiscode/helio-api-boilerplate.svg)](https://david-dm.org/mathiscode/helio-api-boilerplate)
 [![Last Commit](https://img.shields.io/github/last-commit/mathiscode/helio-api-boilerplate.svg)](https://github.com/mathiscode/helio-api-boilerplate/commit/master)
@@ -17,6 +15,8 @@ Helio is an easily extensible backend utilizing Express.js, Mongoose, JWT, and U
 [![Closed issues](https://img.shields.io/github/issues-closed/mathiscode/helio-api-boilerplate.svg)](https://github.com/mathiscode/helio-api-boilerplate/issues?q=is%3Aissue+is%3Aclosed)
 [![Known Vulnerabilities](https://snyk.io/test/github/mathiscode/helio-api-boilerplate/badge.svg?targetFile=package.json)](https://snyk.io/test/github/mathiscode/helio-api-boilerplate?targetFile=package.json)
 
+[![Version](https://img.shields.io/npm/v/helio-api-boilerplate.svg?color=green)](https://www.npmjs.com/package/helio-api-boilerplate)
+[![GitHub license](https://img.shields.io/github/license/mathiscode/helio-api-boilerplate.svg?color=green)](https://github.com/mathiscode/helio-api-boilerplate/blob/master/LICENSE)
 [![Standardjs](https://img.shields.io/badge/code_style-standard-blue.svg)](https://standardjs.com)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-blue.svg)](https://github.com/mathiscode/helio-api-boilerplate/compare)
 [![Hire Me](https://img.shields.io/badge/hire-me-blue.svg)](https://www.linkedin.com/in/jrmathis/)
