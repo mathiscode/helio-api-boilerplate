@@ -31,26 +31,26 @@ Helio is an easily extensible backend utilizing Express.js, Mongoose, JWT, and U
 
 ---
 
-- [Overview](#overview)
-- [Important Notes](#important-notes)
-- [Using as a boilerplate](#using-as-a-boilerplate)
-- [Using from the command line](#using-from-the-command-line)
-  - [Without installing](#without-installing)
-  - [Installing globally](#installing-globally)
-  - [Installing locally](#installing-locally)
-  - [Specifying mods and models from the CLI](#specifying-mods-and-models-from-the-cli)
-- [Importing as a module](#importing-as-a-module)
-  - [Properties](#properties)
-  - [Methods](#methods)
-- [Mods](#mods)
-  - [Using packaged mods](#using-packaged-mods)
-  - [Creating custom mods](#creating-custom-mods)
-  - [Official Helio mods](#official-helio-mods)
-- [Deploying](#deploying)
-  - [Heroku](#heroku)
-- [Testing](#testing)
-- [I don't like how Helio does [X]](#i-dont-like-how-helio-does-x)
-- [Is it perfect?](#is-it-perfect)
+- [Overview](#Overview)
+- [Important Notes](#Important-Notes)
+- [Using as a boilerplate](#Using-as-a-boilerplate)
+- [Using from the command line](#Using-from-the-command-line)
+  - [Without installing](#Without-installing)
+  - [Installing globally](#Installing-globally)
+  - [Installing locally](#Installing-locally)
+  - [Specifying mods and models from the CLI](#Specifying-mods-and-models-from-the-CLI)
+- [Importing as a module](#Importing-as-a-module)
+  - [Properties](#Properties)
+  - [Methods](#Methods)
+- [Mods](#Mods)
+  - [Using packaged mods](#Using-packaged-mods)
+  - [Creating custom mods](#Creating-custom-mods)
+  - [Official Helio mods](#Official-Helio-mods)
+- [Deploying](#Deploying)
+  - [Heroku](#Heroku)
+- [Testing](#Testing)
+- [I don't like how Helio does [X]](#I-dont-like-how-Helio-does-X)
+- [Is it perfect?](#Is-it-perfect)
 
 ---
 
@@ -114,7 +114,7 @@ If that's confusing, just look at the [example-mod](src/mods/example-mod/index.j
 <details open>
 <summary><strong>Click to collapse/expand</strong></summary>
 
-You probably want to [use this repository as a template](https://help.github.com/en/articles/creating-a-repository-from-a-template), then replace the clone URL and directory name below.
+You probably want to [use this repository as a template](https://github.com/mathiscode/helio-api-boilerplate/generate), then replace the clone URL and directory name below.
 
 ```sh
 git clone https://github.com/mathiscode/helio-api-boilerplate.git
