@@ -1,6 +1,6 @@
 {
   "name": "helio-api-boilerplate",
-  "version": "0.6.7",
+  "version": "0.6.8",
   "description": "Extensible backend boilerplate utilizing Express.js, Mongoose, JWT, and User registration/authentication",
   "author": "J.R. Mathis (https://github.com/mathiscode)",
   "license": "MIT",
