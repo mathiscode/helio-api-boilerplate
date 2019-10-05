@@ -1,6 +1,6 @@
 {
   "name": "helio-api-boilerplate",
-  "version": "0.6.8",
+  "version": "0.6.9",
   "description": "Extensible backend boilerplate utilizing Express.js, Mongoose, JWT, and User registration/authentication",
   "author": "J.R. Mathis (https://github.com/mathiscode)",
   "license": "MIT",
@@ -76,7 +76,7 @@
     "uuid": "^3.3.2",
     "winston": "^3.2.1",
     "winston-mongodb": "^5.0.0",
-    "snyk": "^1.230.5"
+    "snyk": "^1.231.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.4.4",
