@@ -105,6 +105,9 @@
     "webpack-cli": "^3.3.2",
     "webpack-node-externals": "^1.7.2"
   },
+  "resolutions": {
+    "set-value": "^2.0.1"
+  },
   "release": {
     "analyzeCommits": "simple-commit-message"
   },
