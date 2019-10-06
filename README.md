@@ -44,7 +44,6 @@ Helio is an easily extensible backend utilizing Express.js, Mongoose, JWT, and U
   - [Installing locally](#installing-locally)
   - [Specifying mods and models from the CLI](#specifying-mods-and-models-from-the-cli)
 - [Importing as a module](#importing-as-a-module)
-  - [Example:](#example)
   - [Properties](#properties)
   - [Methods](#methods)
 - [Mods](#mods)
@@ -186,8 +185,6 @@ helio --mod /myMod:/path/to/myMod --model MyModel:/path/to/MyModel
 
 <details open>
 <summary><strong>Click to collapse/expand</strong></summary>
-
-### Example:
 
 ```sh
 yarn add helio-api-boilerplate helio-mod-users
