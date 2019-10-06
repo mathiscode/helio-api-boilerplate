@@ -237,9 +237,8 @@ class Helio {
     if (registeredRoutes.length > 0) this.log.info('Registered Core Routes:', { routes: registeredRoutes })
 
     // Root handler
-    if (!this.rootHandler) {
-      if (!this.options.staticPath) this.log.warn('No root handler or static path provided; using defaults.')
-
+    if (!this.rootHandler && !this.options.staticPath) {
+      this.log.warn('No root handler or static path provided; using defaults.')
       app.use('/', (req, res) => {
         res.json({
           name: options.name || process.env.NAME || 'Helio API Server',
