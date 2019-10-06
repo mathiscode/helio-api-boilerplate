@@ -31,6 +31,10 @@ Helio is an easily extensible backend utilizing Express.js, Mongoose, JWT, and U
 
 ---
 
+[![asciicast](https://asciinema.org/a/272710.svg)](https://asciinema.org/a/272710)
+
+---
+
 - [Overview](#overview)
 - [Important Notes](#important-notes)
 - [Using as a boilerplate](#using-as-a-boilerplate)

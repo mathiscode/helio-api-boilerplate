@@ -240,7 +240,7 @@ class Helio {
       this.log.warn('No root handler or static path provided; using defaults.')
       app.all('/', (req, res) => {
         res.json({
-          name: options.name || process.env.NAME || 'Helio API Server',
+          name: options.name || process.env.HELIO_NAME || 'Helio API Server',
           version: process.env.SHOW_VERSION ? Package.version : null
         })
       })
@@ -266,7 +266,7 @@ class Helio {
     const port = this.options.port || process.env.PORT || 3001
     const listener = this.app.listen(port, () => {
       this.port = listener.address().port
-      this.log.info(`${this.options.name || process.env.NAME || 'Helio API Server'} listening`, listener.address())
+      this.log.info(`${this.options.name || process.env.HELIO_NAME || 'Helio API Server'} listening`, listener.address())
       if (typeof callback === 'function') callback(listener)
     })
   }
