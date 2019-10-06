@@ -206,7 +206,6 @@ class Helio {
     }
 
     app.use(jwt({ secret: app.get('HELIO_JWT_SECRET'), credentialsRequired: false })) // decode token even on public paths
-    app.use(jwt({ secret: app.get('HELIO_JWT_SECRET'), isRevoked: checkTokenRevocation }).unless({ path: PublicPaths })) // protect private paths
 
     // Setup mod routes
     const registeredMods = []
@@ -220,7 +219,7 @@ class Helio {
         instance.receiveModels(giveModels)
       }
 
-      app.use(mod.path, instance.router)
+      app.use(mod.path, jwt({ secret: app.get('HELIO_JWT_SECRET'), isRevoked: checkTokenRevocation }).unless({ path: PublicPaths }), instance.router)
       registeredMods.push(instance.name)
     })
 
@@ -239,7 +238,7 @@ class Helio {
     // Root handler
     if (!this.rootHandler && !this.options.staticPath) {
       this.log.warn('No root handler or static path provided; using defaults.')
-      app.use('/', (req, res) => {
+      app.all('/', (req, res) => {
         res.json({
           name: options.name || process.env.NAME || 'Helio API Server',
           version: process.env.SHOW_VERSION ? Package.version : null
@@ -254,7 +253,7 @@ class Helio {
 
     // Catch other errors
     app.use((err, req, res, next) => {
-      if (options.consoleErrors && err.name !== 'UnauthorizedError') this.log.error('APP ERROR:', err.stack)
+      if (options.consoleErrors && err.name !== 'UnauthorizedError') this.log.error('APP ERROR:', err)
       if (err.name === 'UnauthorizedError') return res.status(401).json({ error: 'Invalid token' })
       return res.status(500).json({ error: 'Internal API error' })
     })

@@ -227,6 +227,7 @@ const server = new Helio({
   bannerFont: 'The Edge',
 
   // Root handler; to handle requests to /
+  // Do not use this if you just want to serve an index.html
   rootHandler: (req, res, next) => {
     res.json({
       name: process.env.NAME || 'Helio API Server'
