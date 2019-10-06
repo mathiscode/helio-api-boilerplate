@@ -11,8 +11,28 @@ module.exports = {
   mode: 'production',
   externals: [nodeExternals()],
 
+  node: {
+    __filename: false,
+    __dirname: false
+  },
+
   entry: {
     index: './src/index.js'
+  },
+
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        use: {
+          loader: 'babel-loader',
+          options: {
+            presets: ['@babel/preset-env']
+          }
+        }
+      }
+    ]
   },
 
   output: {
@@ -26,7 +46,8 @@ module.exports = {
     new CleanWebpackPlugin(),
 
     new CopyPlugin([
-      { from: 'src/bin/helio', to: 'bin' }
+      { from: 'src/bin/helio', to: 'bin' },
+      { context: 'src/assets', from: '**/*', to: 'assets' }
     ]),
 
     new CreateFileWebpack({
