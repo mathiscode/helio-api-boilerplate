@@ -1,6 +1,6 @@
 {
   "name": "helio-api-boilerplate",
-  "version": "0.6.9",
+  "version": "0.7.0",
   "description": "Extensible backend boilerplate utilizing Express.js, Mongoose, JWT, and User registration/authentication",
   "author": "J.R. Mathis (https://github.com/mathiscode)",
   "license": "MIT",
@@ -19,15 +19,16 @@
     "api-server"
   ],
   "scripts": {
+    "dev": "concurrently \"webpack --watch\" \"npm run server\"",
     "start": "npm run server:prod",
-    "server": "cross-env NODE_ENVIRONMENT=development nodemon --exec babel-node --require node_modules/dotenv/config src/bin/helio",
+    "server": "cross-env NODE_ENVIRONMENT=development nodemon --exec babel-node  --require node_modules/dotenv/config src/bin/helio",
     "server:prod": "cross-env NODE_ENVIRONMENT=production node dist/bin/helio",
     "webpack": "webpack",
     "build": "cross-env NODE_ENV=production npm-run-all webpack build:mods",
     "build:mods": "babel src/mods --out-dir dist/mods",
-    "version:patch": "npm version patch && npm run push",
-    "version:minor": "npm version minor && npm run push",
-    "version:major": "npm version major && npm run push",
+    "version:patch": "npm version patch",
+    "version:minor": "npm version minor",
+    "version:major": "npm version major",
     "push": "git push && npm publish",
     "test": "standard && cross-env NODE_ENV=testing PORT=0 mocha --require @babel/register --require dotenv/config --exit",
     "test:mods": "npm-run-all test:mods:users test:mods:blog",
@@ -54,9 +55,7 @@
     "node": ">=11.6.0"
   },
   "standard": {
-    "ignore": [
-      "/dist"
-    ]
+    "ignore": ["/dist"]
   },
   "dependencies": {
     "@babel/polyfill": "^7.4.4",
@@ -68,15 +67,17 @@
     "express": "^4.16.4",
     "express-jwt": "^5.3.1",
     "express-rate-limit": "^4.0.1",
+    "figlet": "^1.2.4",
     "helio-mod-jokes": "^1.0.0",
     "helio-mod-users": "^1.1.1",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.5.4",
     "npm-run-all": "^4.1.5",
+    "snyk": "^1.231.0",
     "uuid": "^3.3.2",
     "winston": "^3.2.1",
-    "winston-mongodb": "^5.0.0",
-    "snyk": "^1.231.0"
+    "winston-console-format": "^1.0.5",
+    "winston-mongodb": "^5.0.0"
   },
   "devDependencies": {
     "@babel/cli": "^7.4.4",
@@ -88,6 +89,7 @@
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
     "clean-webpack-plugin": "^2.0.2",
+    "concurrently": "^4.1.2",
     "copy-webpack-plugin": "^5.0.3",
     "create-file-webpack": "^1.0.2",
     "eslint": "^5.16.0",
@@ -106,7 +108,8 @@
     "webpack-node-externals": "^1.7.2"
   },
   "resolutions": {
-    "set-value": "^2.0.1"
+    "set-value": "^2.0.1",
+    "caniuse-lite": "^1.0.30000998"
   },
   "release": {
     "analyzeCommits": "simple-commit-message"

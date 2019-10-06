@@ -31,26 +31,27 @@ Helio is an easily extensible backend utilizing Express.js, Mongoose, JWT, and U
 
 ---
 
-- [Overview](#Overview)
-- [Important Notes](#Important-Notes)
-- [Using as a boilerplate](#Using-as-a-boilerplate)
-- [Using from the command line](#Using-from-the-command-line)
-  - [Without installing](#Without-installing)
-  - [Installing globally](#Installing-globally)
-  - [Installing locally](#Installing-locally)
-  - [Specifying mods and models from the CLI](#Specifying-mods-and-models-from-the-CLI)
-- [Importing as a module](#Importing-as-a-module)
-  - [Properties](#Properties)
-  - [Methods](#Methods)
-- [Mods](#Mods)
-  - [Using packaged mods](#Using-packaged-mods)
-  - [Creating custom mods](#Creating-custom-mods)
-  - [Official Helio mods](#Official-Helio-mods)
-- [Deploying](#Deploying)
-  - [Heroku](#Heroku)
-- [Testing](#Testing)
-- [I don't like how Helio does [X]](#I-dont-like-how-Helio-does-X)
-- [Is it perfect?](#Is-it-perfect)
+- [Overview](#overview)
+- [Important Notes](#important-notes)
+- [Using as a boilerplate](#using-as-a-boilerplate)
+- [Using from the command line](#using-from-the-command-line)
+  - [Without installing](#without-installing)
+  - [Installing globally](#installing-globally)
+  - [Installing locally](#installing-locally)
+  - [Specifying mods and models from the CLI](#specifying-mods-and-models-from-the-cli)
+- [Importing as a module](#importing-as-a-module)
+  - [Example:](#example)
+  - [Properties](#properties)
+  - [Methods](#methods)
+- [Mods](#mods)
+  - [Using packaged mods](#using-packaged-mods)
+  - [Creating custom mods](#creating-custom-mods)
+  - [Official Helio mods](#official-helio-mods)
+- [Deploying](#deploying)
+  - [Heroku](#heroku)
+- [Testing](#testing)
+- [I don't like how Helio does [X]](#i-dont-like-how-helio-does-x)
+- [Is it perfect?](#is-it-perfect)
 
 ---
 
@@ -182,6 +183,7 @@ helio --mod /myMod:/path/to/myMod --model MyModel:/path/to/MyModel
 <details open>
 <summary><strong>Click to collapse/expand</strong></summary>
 
+### Example:
 
 ```sh
 yarn add helio-api-boilerplate helio-mod-users
@@ -202,7 +204,7 @@ const server = new Helio({
   jwtTimeout: '1h',
   // Port number for the server
   port: process.env.PORT || 3001,
-  // Prevent automatically listening on port 
+  // Prevent automatically listening on startup
   noListen: false,
   // Log to DB
   logToDB: false,
@@ -210,19 +212,36 @@ const server = new Helio({
   consoleLog: true,
   // Errors output to console
   consoleErrors: true,
+  // Path to serve static content
+  staticPath: null,
   // Verbose output from mongoose operations
   mongooseDebug: false,
+  // Options passed to the Mongoose connect method
+  // (defaults fix deprecation notices)
+  mongooseOptions: null,
+  // Whether to show the figlet banner in the console
+  hideBanner: false,
+  // Text for the figlet banner
+  bannerText: 'Helio',
+  // Figlet font name (from https://github.com/patorjk/figlet.js/tree/master/fonts)
+  bannerFont: 'The Edge',
+
+  // Root handler; to handle requests to /
+  // Do not use this if you just want to serve an index.html
+  rootHandler: (req, res, next) => {
+    res.json({
+      name: process.env.NAME || 'Helio API Server'
+    })
+  }
 
   // Mods that will be loaded
-  // Do not include this option if you want to use the default mods
-  //  (Users, Blog, Jokes, Example)
   mods: [
     { path: '/user', module: UsersMod }
   ],
 
   // Models that will be provided to mods
-  // Do not include this option if you want to use the default models
-  //  (Users, BlogPost, TokenWhitelist)
+  // It's recommended that you at least include:
+  // { name: 'TokenWhitelist', model: TokenWhitelistModel }
   models: [
     { name: 'Users', model: UsersModel },
     { name: 'TokenWhitelist', model: TokenWhitelistModel }
@@ -245,6 +264,7 @@ On the `server` object, you can access the following properties and methods:
 
   - `app`: the Express app object
   - `options`: the options that were used to create the Helio server
+  - `db`: the Mongoose connection object
 
 ### Methods
 

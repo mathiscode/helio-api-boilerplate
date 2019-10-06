@@ -13,7 +13,7 @@ let version = 'unknown'
 try {
   version = require('../version.json')
 } catch (e) {
-  console.warn('Unable to find package version')
+  // ignore
 }
 
 const collect = (value, previous) => previous.concat([value])
