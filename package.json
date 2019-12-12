@@ -42,7 +42,7 @@
     "test:mods:prod:blog": "newman run -e test/postman/postman_environment_prod.json test/postman/collections/BlogMod.json",
     "commit": "commit-wizard",
     "snyk-protect": "snyk protect",
-    "prepublish": "npm run snyk-protect"
+    "prepublish": "yarn run snyk-protect"
   },
   "repository": {
     "type": "git",
@@ -75,7 +75,7 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.5.4",
     "npm-run-all": "^4.1.5",
-    "snyk": "^1.231.0",
+    "snyk": "^1.258.2",
     "uuid": "^3.3.2",
     "winston": "^3.2.1",
     "winston-console-format": "^1.0.5",
