@@ -23,6 +23,7 @@ program
   .option('--dbUri <dbUri>', 'MongoDB Connection URI')
   .option('--jwtSecret <jwtSecret>', 'Random string to sign JWT tokens')
   .option('--jwtTimeout <jwtTimeout>', 'Time until tokens expire (eg. 1h)')
+  .option('--app <app>', 'Load a Helio App', collect, [])
   .option('--no-consoleLog', 'Disable outputting operational log to console')
   .option('--no-consoleErrors', 'Disable outputting errors to console')
   .option('--logToDB', 'Enable logging to database')
@@ -36,6 +37,15 @@ program
 let helio
 
 try {
+  let apps = null
+  const AppSource = program.app.length > 0 ? program.app.join(',') : process.env.APPS
+
+  if (AppSource) {
+    apps = AppSource.split(',').map(data => {
+      return require(data)
+    })
+  }
+
   let mods = null
   const ModSource = program.mod.length > 0 ? program.mod.join(',') : process.env.MODS
 
@@ -85,6 +95,7 @@ try {
     logToDB,
     port,
     noListen: !listen,
+    apps,
     mods,
     models
   })

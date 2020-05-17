@@ -1,5 +1,4 @@
 import '@babel/polyfill'
-import path from 'path'
 import figlet from 'figlet'
 import express from 'express'
 import bodyParser from 'body-parser'
@@ -9,6 +8,7 @@ import winston from 'winston'
 import { consoleFormat } from 'winston-console-format'
 import rateLimit from 'express-rate-limit'
 import { MongoDB } from 'winston-mongodb'
+import cors from 'cors'
 
 import Package from '../package.json'
 
@@ -37,6 +37,7 @@ class Helio {
     options.middleware = Array.isArray(options.middleware) ? options.middleware : []
 
     this.rootHandler = options.rootHandler || null
+    this.apps = options.apps
     this.mods = options.mods || Mods
     this.models = options.models || ModModels
     this.routes = options.routes || []
@@ -155,9 +156,9 @@ class Helio {
     if (options.trustProxy) app.set('trust proxy', 1)
 
     // Setup static content
-    let staticPath = path.resolve(options.staticPath || './dist/assets')
-    this.log.verbose('Serving static content from:', { staticPath })
-    app.use(express.static(staticPath))
+    // let staticPath = path.resolve(options.staticPath || './dist/assets')
+    // this.log.verbose('Serving static content from:', { staticPath })
+    // app.use(express.static(staticPath))
 
     // Setup rate limiting
     const limiter = rateLimit({
@@ -177,8 +178,9 @@ class Helio {
 
     app.use((req, res, next) => {
       req.log = req.Log = this.log // leaving capitalized Log for backward-compatibility
+      req.db = this.db
 
-      this.log.verbose('Incoming request:', {
+      this.log.silly('Incoming request:', {
         url: req.url,
         ip: req.ip,
         rate: req.rateLimit || Infinity // Infinity looks nicer in the logs
@@ -190,8 +192,35 @@ class Helio {
     // Setup any middleware that was passed in
     options.middleware.forEach(mid => app.use(mid))
 
+    // Load Helio Apps
+    this.apps && this.apps.forEach(App => {
+      const appRouter = express.Router()
+      const appInstance = new App(appRouter)
+      this.log.silly('Loading app:', { name: appInstance.name, version: appInstance.package.version, root: appInstance.root })
+
+      // This gets confusing; app is the main Helio Express app, appInstance is loaded app.. will refactor later :/
+
+      if (appInstance.corsAllowedOrigins && appInstance.corsAllowedOrigins.length > 0) {
+        app.use(appInstance.root, cors({
+          origin: (origin, callback) => { // allow requests with no origin
+            if (!origin) return callback(null, true)
+            if (appInstance.corsAllowedOrigins.indexOf(origin) === -1) {
+              let msg = 'The CORS policy for this site does not ' +
+                        'allow access from the specified Origin.'
+              return callback(new Error(msg), false)
+            }
+
+            return callback(null, true)
+          }
+        }))
+      }
+
+      if (appInstance.static) app.use(appInstance.root, express.static(appInstance.static))
+      app.use(appInstance.root, appRouter)
+    })
+
     // Setup mods' public paths
-    this.mods.forEach(mod => {
+    this.mods && this.mods.forEach(mod => {
       const Mod = mod.module
       let instance = new Mod(mod)
       const modPublicPaths = instance.publicPaths || []
@@ -210,7 +239,7 @@ class Helio {
     // Setup mod routes
     const registeredMods = []
 
-    this.mods.forEach(mod => {
+    this.mods && this.mods.forEach(mod => {
       const Mod = mod.module
       const instance = new Mod(mod)
 
@@ -236,15 +265,16 @@ class Helio {
     if (registeredRoutes.length > 0) this.log.info('Registered Core Routes:', { routes: registeredRoutes })
 
     // Root handler
-    if (!this.rootHandler && !this.options.staticPath) {
-      this.log.warn('No root handler or static path provided; using defaults.')
-      app.all('/', (req, res) => {
-        res.json({
-          name: options.name || process.env.HELIO_NAME || 'Helio API Server',
-          version: process.env.SHOW_VERSION ? Package.version : null
-        })
-      })
-    }
+    // -- Migrating to app-based architecture where an app can be defined as root
+    // if (!this.rootHandler && !this.options.staticPath) {
+    //   this.log.warn('No root handler or static path provided; using defaults.')
+    //   app.all('/', (req, res) => {
+    //     res.json({
+    //       name: options.name || process.env.HELIO_NAME || 'Helio API Server',
+    //       version: process.env.SHOW_VERSION ? Package.version : null
+    //     })
+    //   })
+    // }
 
     // Catch 404
     app.use((req, res, next) => {

@@ -1,6 +1,6 @@
 {
   "name": "helio-api-boilerplate",
-  "version": "0.7.2",
+  "version": "0.8.0",
   "description": "Extensible backend boilerplate utilizing Express.js, Mongoose, JWT, and User registration/authentication",
   "author": "J.R. Mathis (https://github.com/mathiscode)",
   "license": "MIT",
@@ -30,7 +30,7 @@
     "version:minor": "npm version minor",
     "version:major": "npm version major",
     "push": "git push && npm publish",
-    "test": "standard && cross-env NODE_ENV=testing PORT=0 mocha --require @babel/register --require dotenv/config --exit",
+    "test": "eslint src && cross-env NODE_ENV=testing PORT=0 mocha --require @babel/register --require dotenv/config --exit",
     "test:mods": "npm-run-all test:mods:users test:mods:blog",
     "test:mods:users": "newman run -e test/postman/postman_environment.json test/postman/collections/UsersMod.json",
     "test:mods:blog": "newman run -e test/postman/postman_environment.json test/postman/collections/BlogMod.json",
@@ -42,7 +42,7 @@
     "test:mods:prod:blog": "newman run -e test/postman/postman_environment_prod.json test/postman/collections/BlogMod.json",
     "commit": "commit-wizard",
     "snyk-protect": "snyk protect",
-    "prepublish": "npm run snyk-protect"
+    "prepublish-disabled": "npm run snyk-protect"
   },
   "repository": {
     "type": "git",
@@ -70,6 +70,8 @@
     "express-jwt": "^5.3.1",
     "express-rate-limit": "^4.0.1",
     "figlet": "^1.2.4",
+    "helio-app-react-template": "file:../helio-apps/helio-app-react-template",
+    "helio-app-authentication": "file:../helio-apps/helio-app-authentication",
     "helio-mod-jokes": "^1.0.0",
     "helio-mod-users": "^1.1.1",
     "jsonwebtoken": "^8.5.1",
@@ -93,6 +95,7 @@
     "clean-webpack-plugin": "^2.0.2",
     "concurrently": "^4.1.2",
     "copy-webpack-plugin": "^5.0.3",
+    "cors": "^2.8.5",
     "create-file-webpack": "^1.0.2",
     "eslint": "^5.16.0",
     "eslint-config-standard": "^12.0.0",
@@ -110,8 +113,7 @@
     "webpack-node-externals": "^1.7.2"
   },
   "resolutions": {
-    "set-value": "^2.0.1",
-    "caniuse-lite": "^1.0.30000998"
+    "set-value": "^2.0.1"
   },
   "release": {
     "analyzeCommits": "simple-commit-message"
