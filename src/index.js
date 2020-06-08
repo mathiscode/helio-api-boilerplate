@@ -4,9 +4,6 @@ import figlet from 'figlet'
 import express from 'express'
 import bodyParser from 'body-parser'
 import mongoose from 'mongoose'
-// import session from 'express-session'
-// import connectMongo from 'connect-mongo'
-// import jwt from 'express-jwt'
 import jwt from 'jsonwebtoken'
 import winston from 'winston'
 import { consoleFormat } from 'winston-console-format'
@@ -290,8 +287,8 @@ class Helio {
 
     // Catch other errors
     app.use((err, req, res, next) => {
-      if (options.consoleErrors && err.name !== 'UnauthorizedError') this.log.error('APP ERROR:', err)
-      if (err.name === 'UnauthorizedError') return res.status(401).json({ error: 'Invalid token' })
+      if (options.consoleErrors && err.name !== 'TokenExpiredError') this.log.error('APP ERROR:', err)
+      if (err.name === 'TokenExpiredError') return res.status(401).json({ error: 'Invalid token' })
       return res.status(500).json({ error: 'Internal API error' })
     })
 
