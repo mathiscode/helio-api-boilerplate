@@ -1,0 +1,119 @@
+#! /usr/bin/env node
+require('dotenv').config()
+if (!process.env.NODE_ENV) process.env.NODE_ENV = 'production'
+
+const path = require('path')
+const program = require('commander')
+const Helio = require('../index').default
+
+let version
+
+try {
+  version = require('../version.json')
+} catch (e) {
+  version = 'unknown'
+}
+
+// const collect = (value, previous) => previous.concat([value])
+
+program
+  .version(version, '-v, --version')
+  .option('--dbUri <dbUri>', 'MongoDB Connection URI')
+  .option('--jwtSecret <jwtSecret>', 'Random string to sign JWT tokens')
+  .option('--jwtTimeout <jwtTimeout>', 'Time until tokens expire (eg. 1h)')
+  .option('--apps <appConfig>', 'Path to apps.js')
+  .option('--no-consoleLog', 'Disable outputting operational log to console')
+  .option('--no-consoleErrors', 'Disable outputting errors to console')
+  .option('--logToDB', 'Enable logging to database')
+  .option('--port <port>', 'Port number to listen on', parseInt)
+  .option('--no-listen', 'Prevent automatically listening on port')
+  .option('--mongooseDebug', 'Enable mongoose debug logging')
+  // .option('--mod <mod>', 'Load a mod; format: /path:fileOrModule (eg. /users:helio-mod-users or /root:/path/to/mod)', collect, [])
+  // .option('--model <model>', 'Load a model; format: ModelName:fileOrModule (eg. Helio:User or MyModel:/path/to/model', collect, [])
+  .parse(process.argv)
+
+let helio
+
+try {
+  let apps = null
+  // Switching to a more powerful app loader, using apps.js
+  // const AppSource = program.app.length > 0 ? program.app.join(',') : process.env.APPS
+  const AppSource = require(path.resolve(program.apps || './apps.js'))
+
+  if (!AppSource.apps) {
+    throw new Error('Invalid apps.js config file')
+  } else {
+    apps = AppSource.apps.map(app => {
+      return {
+        Loader: typeof app.use === 'function' ? app.use : require(path.resolve(app.use)),
+        options: app.options
+      }
+    })
+  }
+
+  // let mods = null
+  // const ModSource = program.mod.length > 0 ? program.mod.join(',') : process.env.MODS
+
+  // if (ModSource) {
+  //   mods = ModSource.split(',').map(data => {
+  //     const [ modPath, modModule ] = data.split(/:(.+)/)
+  //     const modModulePath = (['.', '/'].includes(modModule[0])) ? path.join(process.cwd(), modModule) : modModule
+  //     return { path: modPath, module: require(modModulePath).default }
+  //   })
+  // }
+
+  // let models = null
+  // const ModelSource = program.model.length > 0 ? program.model.join(',') : process.env.MODELS
+
+  // if (ModelSource) {
+  //   models = ModelSource.split(',').map(data => {
+  //     let [ modelName, modelModule ] = data.split(/:(.+)/)
+
+  //     if (modelName === 'Helio') {
+  //       const model = DefaultModels.find(m => m.name === modelModule)
+  //       if (!model) throw new Error(`${modelName}:${modelModule} is not a valid model`)
+  //       return { name: model.name, model: model.model }
+  //     }
+
+  //     const modelModulePath = (['.', '/'].includes(modelModule[0])) ? path.join(process.cwd(), modelModule) : modelModule
+  //     return { name: modelName, model: require(modelModulePath).default }
+  //   })
+  // }
+
+  const {
+    dbUri,
+    jwtSecret,
+    jwtTimeout,
+    consoleLog,
+    consoleErrors,
+    logToDB,
+    mongooseDebug,
+    listen,
+    port
+  } = program
+
+  helio = new Helio({
+    dbUri,
+    jwtSecret,
+    jwtTimeout,
+    consoleLog,
+    consoleErrors,
+    logToDB,
+    mongooseDebug,
+    port,
+    noListen: !listen,
+    apps
+    // mods,
+    // models
+  })
+} catch (err) {
+  process.env.NODE_ENV === 'production' ? console.error(err.toString()) : console.error(err)
+  process.exit(1)
+}
+
+process.on('unhandledRejection', function (err) {
+  console.log(err.stack)
+  process.exit(1)
+})
+
+module.exports = helio
